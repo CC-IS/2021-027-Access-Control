@@ -31,13 +31,17 @@ const loop = function (result){
     //# If we have the UID, continue
     const uid = response.data;
     let UID = '' + uid[0].toString(16) + uid[1].toString(16) + uid[2].toString(16)+ uid[3].toString(16);
-    
+    let found = false;
     result.users.values.forEach(Element => {
       if (Element.includes(UID)){
         console.log('succss');
         control.runMachine();
+        found = true;
       }
     });
+    if (!found){
+      control.noAccess();
+    }
   },1000)
 }
 
