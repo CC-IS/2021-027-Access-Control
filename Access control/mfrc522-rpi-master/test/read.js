@@ -38,13 +38,7 @@ const loop = function (result){
         control.runMachine();
       }
     });
-    //console.log(UID);
-
-    // if (UID =="ff83aa29"){
-    //   console.log("first one detected!")
-    // }
-  },2000)
-  // console.log(result.users.values);
+  },1000)
 }
 
 check.getDataFromSheet().then((result)=>{
