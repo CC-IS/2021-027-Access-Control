@@ -1,7 +1,7 @@
 const Mfrc522 = require("./../index");
 const SoftSPI = require("rpi-softspi");
 const check = require('./spreadsheetChecker');
-
+const control = require('./controllingMachine');
 const softSPI = new SoftSPI({
   clock: 23, // pin number of SCLK
   mosi: 19, // pin number of MOSI
@@ -18,13 +18,14 @@ const loop = function (result){
 
     if (!response.status) {
       //console.log("No Card");
-      console.log("no card");
+      control.stopMachine();
       return;
     }
     //# Get the UID of the card
     response = mfrc522.getUid();
     if (!response.status) {
       console.log("UID Scan Error");
+      control.stopMachine();
       return;
     }
     //# If we have the UID, continue
@@ -34,6 +35,7 @@ const loop = function (result){
     result.users.values.forEach(Element => {
       if (Element.includes(UID)){
         console.log('succss');
+        control.runMachine();
       }
     });
     //console.log(UID);
