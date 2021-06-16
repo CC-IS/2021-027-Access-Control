@@ -37,7 +37,7 @@ const loop = function (result){
       if (Element.includes(UID)){
         let index = result.values.indexOf(Element);
         data.getRow(index).then((result)=>{
-          console.log(result.values);
+          console.log(result.data);
         })
         control.runMachine();
         found = true;
