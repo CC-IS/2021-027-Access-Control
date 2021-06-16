@@ -30,11 +30,11 @@
     } 
      
     async getRow(row) {
-        return resolve (await this.googleSheets.spreadsheets.values.get({
+        return await this.googleSheets.spreadsheets.values.get({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
             range: `Authorizations!${1}:${1}`
-        }));    
+        });    
 }
 }
 exports.getDataFromSheet = getDataFromSheet ;
