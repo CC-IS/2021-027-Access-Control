@@ -32,8 +32,7 @@ const loop = function (){
     }
     //# If we have the UID, continue
     const uid = response.data;
-    let UID = '';
-    UID +=  (uid[0].toString(16)) += (uid[1].toString(16)) + (uid[2].toString(16))+ (uid[3].toString(16));
+    let UID = '' + uid[0].toString(16) + uid[1].toString(16) + uid[2].toString(16)+ uid[3].toString(16);
     
     console.log(UID);
 
