@@ -33,7 +33,7 @@
         return await this.googleSheets.spreadsheets.values.get({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
-            range: `Authorizations!${row}:${row}`
+            range: `Authorizations!${row+2}:${row+2}`
         });    
 }
 }
