@@ -36,8 +36,9 @@ const loop = function (result){
     result.values.forEach(Element => {
       if (Element.includes(UID)){
         let index = result.values.indexOf(Element);
-        // console.log(index);
-        // console.log(result.getRow(index).values);
+        data.getRow(index).then((result)=>{
+          console.log(result.values);
+        })
         control.runMachine();
         found = true;
       }
