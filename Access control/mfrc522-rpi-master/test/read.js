@@ -1,6 +1,6 @@
 const Mfrc522 = require("./../index");
 const SoftSPI = require("rpi-softspi");
-const check = require('./spreadsheetChecker');
+const {getDataFromSheet} = require('./spreadsheetChecker');
 const control = require('./controllingMachine');
 const softSPI = new SoftSPI({
   clock: 23, // pin number of SCLK
@@ -9,6 +9,7 @@ const softSPI = new SoftSPI({
   client: 24 // pin number of CS
 });
 const mfrc522 = new Mfrc522(softSPI).setResetPin(22).setBuzzerPin(18);
+
 
 const loop = function (result){
   setInterval(function() {
@@ -32,11 +33,11 @@ const loop = function (result){
     const uid = response.data;
     let UID = '' + uid[0].toString(16) + uid[1].toString(16) + uid[2].toString(16)+ uid[3].toString(16);
     let found = false;
-    result.users.values.forEach(Element => {
+    result.values.forEach(Element => {
       if (Element.includes(UID)){
         let index = result.users.values.indexOf(Element);
         // console.log(index);
-        console.log(result.getRow(index).values);
+        // console.log(result.getRow(index).values);
         control.runMachine();
         found = true;
       }
@@ -47,6 +48,10 @@ const loop = function (result){
   },1000)
 }
 
-check.getDataFromSheet().then((result)=>{
+var data = new getDataFromSheet();
+data.getUsers().then((result)=>{
+  // console.log(result.data);
   loop(result);
 })
+
+
