@@ -32,7 +32,7 @@ const loop = function (){
     }
     //# If we have the UID, continue
     const uid = response.data;
-    let UID = uid[0]+uid[1]+uid[2]+uid[3];
+    let UID = + uid[0].toString(16)+uid[1].toString(16)+uid[2].toString(16)+uid[3].toString(16);
     console.log(UID);
     if (UID ==" ff 83 aa 29"){
       console.log("first one detected!")
