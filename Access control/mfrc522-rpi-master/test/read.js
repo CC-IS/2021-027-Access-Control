@@ -49,7 +49,7 @@ const loop = function (result){
 }
 
 var data = new getDataFromSheet();
-data.getUsers().then((result)=>{
+data.getUsers().then((result.data)=>{
   // console.log(result.data);
   loop(result);
 })
