@@ -32,9 +32,18 @@ const loop = function (){
     }
     //# If we have the UID, continue
     const uid = response.data;
-    let UID = '';
-    UID +=  (uid[0].toString(16)) += (uid[1].toString(16)) + (uid[2].toString(16))+ (uid[3].toString(16));
+    let UID = uid[0].toString(16);
+   // UID +=  (uid[0].toString(16)) += (uid[1].toString(16)) + (uid[2].toString(16))+ (uid[3].toString(16));
+    
     console.log(UID);
+
+    console.log(
+        "Card read UID: %s %s %s %s",
+        uid[0].toString(16),
+        uid[1].toString(16),
+        uid[2].toString(16),
+        uid[3].toString(16)
+      );
     
     if (UID ==" ff 83 aa 29"){
       console.log("first one detected!")
