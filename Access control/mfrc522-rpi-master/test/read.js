@@ -34,7 +34,9 @@ const loop = function (result){
     let found = false;
     result.users.values.forEach(Element => {
       if (Element.includes(UID)){
-        console.log('succss');
+        let index = result.users.values.indexOf(Element);
+        console.log(index);
+        // console.log('succss');
         control.runMachine();
         found = true;
       }
