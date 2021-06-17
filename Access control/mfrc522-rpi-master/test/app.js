@@ -14,7 +14,7 @@ const loop = function (result){
   setInterval( async function() {
 
     let UID = read.readCards();
-    console.log('UID is: ' UID);
+    console.log('UID is: ' + UID);
     if (!UID){
       control.stopMachine();
       return;
