@@ -45,7 +45,7 @@ class read{
         if (UID2){
             if (UID2 === UID){
                 console.log('please insert non-admin card');
-                this.read2bAddedUser(UID);
+                return this.read2bAddedUser(UID);
             }
             else{
                 console.log('user captured successfully');
@@ -56,7 +56,7 @@ class read{
             
             setTimeout(()=>{ 
                 console.log("waiting 3 seconds to re-read the user.");
-                this.read2bAddedUser();
+                return this.read2bAddedUser();
                 this.time-=3;
                 if (this.time<0){
                     return;
