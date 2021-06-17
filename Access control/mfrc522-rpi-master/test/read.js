@@ -39,7 +39,7 @@ class read{
     async read2bAddedUser(UID){
         let UID2 = this.readCards(); 
         if (UID2){
-            if (UID2 === UID1){
+            if (UID2 === UID){
                 console.log('please insert non-admin card');
                 this.read2bAddedUser(UID);
             }
