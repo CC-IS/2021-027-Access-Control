@@ -25,11 +25,12 @@ const loop = function (result){
       await setInterval((interval) => {
         UID2bAdded = read.readCards();
         if (UID2bAdded|| time < 0){
+          console.log ("UID 2 b " + UID2bAdded);
           clearInterval(interval);
         }
         time-=1;
       }, 1000);
-      console.log ("UID 2 b " + UID2bAdded);
+      
       if (UID2bAdded){
         //add it with the devNum to the sheet
         sheet.addUser(UID2bAdded,devNum);
