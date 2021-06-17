@@ -33,6 +33,7 @@ const loop = function (result){
       if (UID2bAdded){
         //add it with the devNum to the sheet
         sheet.addUser(UID2bAdded,devNum);
+        console.log("tmam l7d hna");
       }
       else {
         console.log("Time over, insert admin card again.");
