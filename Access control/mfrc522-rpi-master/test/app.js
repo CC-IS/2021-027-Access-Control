@@ -31,13 +31,10 @@ const loop = function (result){
       progmode = true;
       //addUser(UID);
     } else if(progmode && !adminUIDs.includes(UID)){
-      // add user here
       addUser(UID);
-      return;
-    } else if (progmode){
-      return;
-    }
-
+    } 
+    else{
+      
     let found = sheet.foundUser(result.values, UID);
     if (found[0]){
       await sheet.getRow(found[1]).then((result)=>{
@@ -55,6 +52,8 @@ const loop = function (result){
       return;
     }
     
+    }
+
   },2000)
 }
 
