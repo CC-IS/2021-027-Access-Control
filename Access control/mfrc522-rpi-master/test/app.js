@@ -29,11 +29,11 @@ const loop = function (result){
         }
         time-=1;
       }, 1000);
-      // console.log (UID2bAdded);
+      console.log ("UID 2 b " + UID2bAdded);
       if (UID2bAdded){
         //add it with the devNum to the sheet
         sheet.addUser(UID2bAdded,devNum);
-        console.log("tmam l7d hna");
+        // console.log("tmam l7d hna");
       }
       else {
         console.log("Time over, insert admin card again.");
