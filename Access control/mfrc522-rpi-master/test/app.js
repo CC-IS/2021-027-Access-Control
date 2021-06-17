@@ -8,6 +8,7 @@ const sheet = new getDataFromSheet();
 let devNum = 0;
 sheet.getDevNum(devName).then ((value)=>{devNum = value});
 const read = new readClass();
+let progmode = false;
 
 function sleep(milliseconds) {
   const date = Date.now();
@@ -19,45 +20,42 @@ function sleep(milliseconds) {
 
 const loop = function (result){
   setInterval( async function() {
-    // sheet.progmode = true;
-    console.log("at the begninng sheet prog mode is "+ sheet.progmode);
-    if (sheet.progmode){
+  
+    let UID = read.readCards();
+    if (!UID){
+      console.log("Insert Card");
       return;
     }
 
-    let UID = read.readCards();
-    // console.log('UID is: ' + UID);
-    if (!UID){
-      control.stopMachine();
-      return;
-    }
-    let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
       console.log('Entered Programming Mode.. please input user card after 3 seconds');
       console.log ('Note: Programming mode will end in 30 seconds from now.');
+      progmode= true;
       sleep(3000);
+      read.read2bAddedUser(UID2).then(()=>{
+        console.log("Read Card Successfully");
+        sheet.addUser(UID2,devNum);
 
-      read.read2bAddedUser(UID);
-            
+      })
     }
+
     let found = sheet.foundUser(result.values, UID);
     if (found[0]){
-      let index = found[1];
-      await sheet.getRow(index).then((result)=>{
+      await sheet.getRow(found[1]).then((result)=>{
              access = (result.data.values[0][devNum]);
+            if (access==1){
+              control.runMachine();
+            }
+            else{
+              control.stopMachine();
+            }
             })
     }
     else {
-      control.stopMachine();
+      console.log("User doesn't exist.");
       return;
     }
     
-    if (access==1){
-      control.runMachine();
-    }
-    else{
-      control.stopMachine();
-    }
   },2000)
 }
 
