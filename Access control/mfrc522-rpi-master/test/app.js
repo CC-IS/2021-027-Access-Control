@@ -41,7 +41,7 @@ const loop = function (result){
     let UID = '' + uid[0].toString(16) + uid[1].toString(16) + uid[2].toString(16)+ uid[3].toString(16);
     // console.log(UID);
     // let UID = 'ff83aa29';
-    console.log(devNum);
+    // console.log(devNum);
     
     let found = data.foundUser(result.values, UID);
     if (found[0]){
