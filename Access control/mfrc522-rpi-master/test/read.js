@@ -5,6 +5,7 @@ const sheet = new getDataFromSheet();
 class read{
     constructor(){
         // const SoftSPI = require("rpi-softspi");
+        this.time = 30;
         this.Mfrc522 = require("../index");
         this.SoftSPI = require("rpi-softspi");
         this.softSPI = new this.SoftSPI({
@@ -40,7 +41,6 @@ class read{
     }
 
     async read2bAddedUser(UID, devNum){
-        sheet.progmode = true;
         let UID2 = this.readCards(); 
         if (UID2){
             if (UID2 === UID){
@@ -49,17 +49,16 @@ class read{
             }
             else{
                 console.log('user captured successfully');
-                sheet.addUser(UID2,devNum);
-                return;
+                return UID2;
             }  
         }
         else {
-            let time = 30;
+            
             setTimeout(()=>{ 
                 console.log("waiting 3 seconds to re-read the user.");
                 this.read2bAddedUser();
-                time-=3;
-                if (time<0){
+                this.time-=3;
+                if (this.time<0){
                     return;
                 }
             },3000)}
