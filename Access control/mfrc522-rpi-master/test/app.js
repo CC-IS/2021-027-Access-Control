@@ -4,7 +4,6 @@ const control = require('./controllingMachine');
 const devName="CCIS-HBS-001";
 let access =0;
 let adminUIDs =["c66759a5"];
-let progmode = false;
 const sheet = new getDataFromSheet();
 let devNum = 0;
 sheet.getDevNum(devName).then ((value)=>{devNum = value});
@@ -20,7 +19,7 @@ function sleep(milliseconds) {
 
 const loop = function (result){
   setInterval( async function() {
-    if (progmode){
+    if (sheet.progmode){
       return;
     }
 
@@ -37,9 +36,7 @@ const loop = function (result){
       console.log ('Note: Programming mode will end in 30 seconds from now.');
       sleep(3000);
 
-      read.read2bAddedUser(UID).then(()=>{
-        progmode = false;
-      });
+      read.read2bAddedUser(UID);
       
 
       
