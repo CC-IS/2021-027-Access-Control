@@ -68,6 +68,6 @@ async function dealWithAdmin(UID){
     UIDRead = UID2;
   })
   console.log("Read Card Successfully");
-  sheet.addUser(UID2,devNum);
+  sheet.addUser(UIDRead,devNum);
 
 }
