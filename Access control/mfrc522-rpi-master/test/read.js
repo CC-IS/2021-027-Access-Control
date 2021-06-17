@@ -36,19 +36,24 @@ class read{
         return UID;
     }
 
-    read2bAddedUser(){
-        if (this.readCards()){
-            console.log('user read successfully');
-      
-            return this.readCards()
-
+    async read2bAddedUser(UID){
+        let UID2 = this.readCards(); 
+        if (UID2){
+            if (UID2 === UID1){
+                console.log('please insert non-admin card');
+                this.read2bAddedUser(UID);
+            }
+            else{
+                console.log('user captured successfully');
+                return UID2;
+            }  
         }
         else {
             let time = 30;
             setTimeout(()=>{ 
-                console.log("waiting 3 seconds to read the user.");
+                console.log("waiting 3 seconds to re-read the user.");
                 this.read2bAddedUser();
-                time-=1;
+                time-=3;
                 if (time<0){
                     return;
                 }
