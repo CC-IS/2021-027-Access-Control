@@ -30,11 +30,11 @@ const loop = function (result){
     let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
       progmode = true;
-      console.log('Entered Programming Mode /n please input user card after 3 seconds');
+      console.log('Entered Programming Mode.. please input user card after 3 seconds');
       sleep(3000);
-      UID2bAdded = read.read2bAddedUser().then (()=>{
+      UID2bAdded = read.read2bAddedUser(UID).then (()=>{
         sheet.addUser(UID2bAdded,devNum);
-      
+        return;
       });
       
     }
