@@ -36,6 +36,15 @@
             range: `Authorizations!${row+2}:${row+2}`
         });    
     }
+    async addUser(UID,col){
+        let arr = [];
+        await this.getUsers().then((result)=>{
+             arr.push (this.foundUser (result.data.values, UID)) 
+        })
+        console.log(arr);
+        // if this.foundUser()
+    }
+
     foundUser(values, UID){
         let found = [false,0];
         // console.log(values, UID);
@@ -54,5 +63,6 @@
         })
         return returnedValue;
     }
+    
 }
 exports.getDataFromSheet = getDataFromSheet ;
