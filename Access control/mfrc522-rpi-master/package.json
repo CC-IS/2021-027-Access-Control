@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "googleapis": "^76.0.0",
+    "nodemon": "^2.0.7",
     "rpi-softspi": "^1.0.5",
     "rpio": "^1.3.0"
   }
