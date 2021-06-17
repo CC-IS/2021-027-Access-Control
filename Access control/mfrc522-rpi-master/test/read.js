@@ -61,6 +61,9 @@ const loop = function (result){
             //  console.log("after setting the value"); 
             })
     }
+    else {
+      control.stopMachine();
+    }
     
     if (access==1){
       control.runMachine();
