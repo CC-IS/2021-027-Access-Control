@@ -48,7 +48,9 @@ const loop = function (result){
     }
     //# If we have the UID, continue
     const uid = response.data;
-    let UID = 'ff83aa29';
+    let UID = '' + uid[0].toString(16) + uid[1].toString(16) + uid[2].toString(16)+ uid[3].toString(16);
+    // let UID = 'ff83aa29';
+
     let found = data.foundUser(result.values, UID);
     if (found[0]){
       let index = found[1];
@@ -66,24 +68,6 @@ const loop = function (result){
     else{
       control.stopMachine();
     }
-    
-    // }
-    // result.values.forEach(Element => {
-    //   if (Element.includes(UID)){
-    //     let index = result.values.indexOf(Element);
-    //     data.getRow(index).then((result)=>{
-    //     console.log(result.data.values[0][devNum]);
-    //     })
-    //     control.runMachine();
-    //     found = true;
-    //   }
-    // });
-    // if (!found){
-    //   control.noAccess();
-    // }
-
-
-    
   },1000)
 }
 
