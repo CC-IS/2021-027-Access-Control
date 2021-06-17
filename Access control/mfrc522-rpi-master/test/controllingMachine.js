@@ -1,8 +1,8 @@
 exports.runMachine = function (){
-    // console.log("To be implemented");
+     console.log("running");
 };
 exports.stopMachine = function(){
-    console.log('To be implemented, power off');
+    console.log('not running');
 };
 exports.noAccess = function(){
     console.log("to be implemented, you don't have access")
