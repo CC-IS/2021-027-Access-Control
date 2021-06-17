@@ -37,8 +37,10 @@ const loop = function (result){
       console.log ('Note: Programming mode will end in 30 seconds from now.');
       sleep(3000);
 
-      await read.read2bAddedUser(UID);
-      progmode = false;
+      read.read2bAddedUser(UID).then(()=>{
+        progmode = false;
+      });
+      
 
       
     }
