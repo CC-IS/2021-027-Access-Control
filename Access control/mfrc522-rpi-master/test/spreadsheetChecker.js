@@ -37,11 +37,30 @@
             range: `Authorizations!${row+2}:${row+2}`
         });    
     }
+    async changeCell(A1,value){
+        await (await this.googleSheets.spreadsheets.values.update({
+            auth: this.auth,
+            spreadsheetId: this.spreadsheetId,
+            range: A1,
+            valueInputOption:'userInput',
+            resource: {
+                value: value
+            }
+        })).data
+
+    }
     async addUser(UID,col){
         let arr = [];
         await this.getUsers().then((result)=>{
-             arr = (this.foundUser (result.data.values, UID));
-             console.log(arr);
+             arr = this.foundUser (result.data.values);
+             if (arr[0]){
+                 this.changeCell(A8,"Hello");
+                 // change col to be 1
+             }
+             else{
+                 //add new line with zeros
+                 //call adduser again
+             }
         })
     }
 
