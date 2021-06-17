@@ -31,7 +31,7 @@ const loop = function (result){
     }
 
     if (adminUIDs.includes(UID)){
-      dealWithAdmin();
+      dealWithAdmin(UID);
     }
 
     let found = sheet.foundUser(result.values, UID);
