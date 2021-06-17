@@ -41,7 +41,7 @@
         let arr = [];
         await this.getUsers().then((result)=>{
              arr = (this.foundUser (result.data.values, UID));
-             console.log("Implement writing here");
+             console.log(arr);
         })
     }
 
