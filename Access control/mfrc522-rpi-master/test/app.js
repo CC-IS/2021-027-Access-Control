@@ -19,6 +19,7 @@ const loop = function (result){
       control.stopMachine();
       return;
     }
+    let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
       let time = 30;
       setInterval((interval) => {
