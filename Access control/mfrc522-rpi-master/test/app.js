@@ -31,7 +31,7 @@ const loop = function (result){
     }
     let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
-      progmode = true;
+      sheet.progmode = true;
       console.log('Entered Programming Mode.. please input user card after 3 seconds');
       console.log ('Note: Programming mode will end in 30 seconds from now.');
       sleep(3000);
