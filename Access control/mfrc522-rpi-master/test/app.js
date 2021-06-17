@@ -26,7 +26,7 @@ const loop = function (result){
       console.log("Insert Card");
       return;
     }
-
+    console.log(UID);
     if (adminUIDs.includes(UID)){
       progmode = true;
       setTimeout(()=>{ progMode = false;}, 30000);
