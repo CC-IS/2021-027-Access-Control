@@ -38,7 +38,10 @@ class read{
 
     read2bAddedUser(){
         if (this.readCards()){
+            console.log('user read successfully');
+      
             return this.readCards()
+
         }
         else {
             console.log("waiting 3 seconds to read the user.");
