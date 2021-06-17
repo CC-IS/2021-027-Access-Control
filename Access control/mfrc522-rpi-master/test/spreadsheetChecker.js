@@ -44,6 +44,8 @@
         })
         console.log(arr + `progmode is `+ this.progmode);
         this.progmode = false;
+        console.log(arr + `progmode is `+ this.progmode);
+        
         // if this.foundUser()
         
 
