@@ -36,6 +36,16 @@ class read{
         return UID;
     }
 
+    read2bAddedUser(){
+        if (this.readCards()){
+            return this.readCards()
+        }
+        else {
+            console.log("waiting 3 seconds to read the user.");
+            setTimeout(this.read2bAddedUser(), 3000);
+        }
+    }
+
 }
 
 exports.readClass = read;
