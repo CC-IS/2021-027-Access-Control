@@ -19,6 +19,7 @@ function sleep(milliseconds) {
 
 const loop = function (result){
   setInterval( async function() {
+    console.log("at the begninng sheet prog mode is "+ sheet.progmode);
     if (sheet.progmode){
       return;
     }
@@ -31,15 +32,12 @@ const loop = function (result){
     }
     let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
-      sheet.progmode = true;
       console.log('Entered Programming Mode.. please input user card after 3 seconds');
       console.log ('Note: Programming mode will end in 30 seconds from now.');
       sleep(3000);
 
       read.read2bAddedUser(UID);
-      
-
-      
+            
     }
     let found = sheet.foundUser(result.values, UID);
     if (found[0]){
