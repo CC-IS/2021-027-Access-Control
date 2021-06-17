@@ -40,11 +40,12 @@
     async addUser(UID,col){
         let arr = [];
         await this.getUsers().then((result)=>{
-             arr.push (this.foundUser (result.data.values, UID)) 
+             arr.push (this.foundUser (result.data.values, UID));
         })
         console.log(arr + `progmode is `+ this.progmode);
-        // if this.foundUser()
         this.progmode = false;
+        // if this.foundUser()
+        
 
     }
 
