@@ -1,6 +1,7 @@
   class getDataFromSheet{
 
     constructor (){
+        this.progmode = false;
         const { google } = require("googleapis");
         this.auth = new google.auth.GoogleAuth({
             keyFile: "credentials.json",
@@ -43,6 +44,8 @@
         })
         console.log(arr);
         // if this.foundUser()
+        this.progmode = false;
+
     }
 
     foundUser(values, UID){
