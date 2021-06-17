@@ -44,10 +44,14 @@ class read{
 
         }
         else {
-            
+            let time = 30;
             setTimeout(()=>{ 
                 console.log("waiting 3 seconds to read the user.");
                 this.read2bAddedUser();
+                time-=1;
+                if (time<0){
+                    return;
+                }
             },3000)}
         }
     }
