@@ -30,9 +30,11 @@ const loop = function (result){
     if (adminUIDs.includes(UID)){
       progmode = true;
       //addUser(UID);
-    } else if(progmode){
+    } else if(progmode && !adminUIDs.includes(UID)){
       // add user here
       addUser(UID);
+      return;
+    } else if (progmode){
       return;
     }
 
@@ -65,9 +67,7 @@ async function addUser(UID){
   console.log ('Note: Programming mode will end in 30 seconds from now.');
   // progmode= true;
   //  let UIDRead = await rfid.readCards();
-    console.log("Read Card Successfully");
     sheet.addUser(UID,devNum).then(()=>{
-      console.log("I am wrong");
       progmode = false;
     });
   }
