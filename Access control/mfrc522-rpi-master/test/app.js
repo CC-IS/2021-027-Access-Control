@@ -20,9 +20,6 @@ function sleep(milliseconds) {
 
 const loop = function (result){
   setInterval( async function() {
-    if (progmode){
-      return;
-    }
   
     let UID = rfid.readCards();
     if (!UID){
@@ -36,7 +33,7 @@ const loop = function (result){
     } else if(progmode){
       // add user here
       addUser(UID);
-      
+      return;
     }
 
     let found = sheet.foundUser(result.values, UID);
