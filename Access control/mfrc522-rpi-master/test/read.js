@@ -60,6 +60,7 @@ const loop = function (result){
     }
     else {
       control.stopMachine();
+      return;
     }
     
     if (access==1){
