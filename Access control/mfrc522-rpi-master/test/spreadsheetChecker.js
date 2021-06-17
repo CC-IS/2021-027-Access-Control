@@ -40,14 +40,9 @@
     async addUser(UID,col){
         let arr = [];
         await this.getUsers().then((result)=>{
-             arr.push (this.foundUser (result.data.values, UID));
+             arr = (this.foundUser (result.data.values, UID));
+             console.log("Implement writing here and turned off prog mode");
         })
-        console.log(arr + `progmode is `+ this.progmode);
-        this.progmode = false;
-        console.log(arr + `progmode is `+ this.progmode);
-        
-        // if this.foundUser()
-        
 
     }
 
