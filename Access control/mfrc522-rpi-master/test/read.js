@@ -39,7 +39,7 @@ class read{
         let UID = '' + uid[0].toString(16) + uid[1].toString(16) + uid[2].toString(16)+ uid[3].toString(16);
         return UID;
     }
-
+/*
     async read2bAddedUser(UID, devNum){
         let UID2 = this.readCards(); 
         // console.log(UID + "    --      " + UID2);
@@ -63,7 +63,7 @@ class read{
                     return;
                 }
             },3000)}
-        }
+        }*/
     }
 
 
