@@ -36,7 +36,7 @@ const loop = function (result){
     } else if(progMode){
       // add user here
       addUser(UID);
-      progMode = false;
+      
     }
 
     let found = sheet.foundUser(result.values, UID);
@@ -69,8 +69,9 @@ async function addUser(UID){
   // progmode= true;
   //  let UIDRead = await rfid.readCards();
     console.log("Read Card Successfully");
-    sheet.addUser(UID,devNum);
-  })
-  
+    sheet.addUser(UID,devNum).then(()=>{
+      progMode = false;
 
-}
+    });
+  }
+  
