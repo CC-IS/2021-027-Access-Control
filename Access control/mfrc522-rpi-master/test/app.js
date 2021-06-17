@@ -22,23 +22,21 @@ const loop = function (result){
     let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
       let time = 30;
-      await setInterval((interval) => {
-        UID2bAdded = read.readCards();
-        if (UID2bAdded|| time < 0){
-          console.log ("UID 2 b " + UID2bAdded);
-          clearInterval(interval);
-        }
-        time-=1;
-      }, 1000);
-      
-      if (UID2bAdded){
-        //add it with the devNum to the sheet
-        sheet.addUser(UID2bAdded,devNum);
-        // console.log("tmam l7d hna");
-      }
-      else {
-        console.log("Time over, insert admin card again.");
-      }
+      setTimeout(() => {
+          setInterval((interval) => {
+          UID2bAdded = read.readCards();
+          if (UID2bAdded){
+            console.log ("UID 2 b " + UID2bAdded);
+            sheet.addUser(UID2bAdded,devNum);
+          }
+          if (time <0){
+            console.log("Time over, insert admin card again.");
+            clearInterval(interval);
+          }
+          time-=1;
+        }, 1000);
+          
+      }, 5000);
     }
     
     let found = sheet.foundUser(result.values, UID);
