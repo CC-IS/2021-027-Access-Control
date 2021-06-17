@@ -41,9 +41,8 @@
         let arr = [];
         await this.getUsers().then((result)=>{
              arr = (this.foundUser (result.data.values, UID));
-             console.log("Implement writing here and turned off prog mode");
+             console.log("Implement writing here");
         })
-
     }
 
     foundUser(values, UID){
