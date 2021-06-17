@@ -1,3 +1,7 @@
+
+const {getDataFromSheet} = require('./spreadsheetChecker');
+const sheet = new getDataFromSheet();
+
 class read{
     constructor(){
         // const SoftSPI = require("rpi-softspi");
@@ -36,7 +40,7 @@ class read{
         return UID;
     }
 
-    async read2bAddedUser(UID){
+    async read2bAddedUser(UID, devNum){
         let UID2 = this.readCards(); 
         if (UID2){
             if (UID2 === UID){
@@ -45,7 +49,8 @@ class read{
             }
             else{
                 console.log('user captured successfully');
-                return UID2;
+                sheet.addUser(UID2,devNum);
+                return;
             }  
         }
         else {
