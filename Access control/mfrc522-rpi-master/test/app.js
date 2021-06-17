@@ -19,7 +19,7 @@ function sleep(milliseconds) {
 
 const loop = function (result){
   setInterval( async function() {
-    sheet.progmode = true;
+    // sheet.progmode = true;
     console.log("at the begninng sheet prog mode is "+ sheet.progmode);
     if (sheet.progmode){
       return;
