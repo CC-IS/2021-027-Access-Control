@@ -34,7 +34,7 @@ const loop = function (result){
       sleep(3000);
 
       UID2bAdded = await read.read2bAddedUser(UID)
-      await sheet.addUser(UID2bAdded,devNum);
+  
       
     }
     let found = sheet.foundUser(result.values, UID);
