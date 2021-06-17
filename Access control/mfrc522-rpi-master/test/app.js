@@ -29,7 +29,8 @@ const loop = function (result){
 
     if (adminUIDs.includes(UID)){
       progmode = true;
-      //addUser(UID);
+      setTimeout(()=>{ progMode = false;}, 30000);
+      addUser(UID);
     } else if(progmode && !adminUIDs.includes(UID)){
       addUser(UID);
     } 
