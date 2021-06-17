@@ -1,53 +1,47 @@
-const Mfrc522 = require("../index");
-const SoftSPI = require("rpi-softspi");
 const {getDataFromSheet} = require('./spreadsheetChecker');
+const {readClass} = require('./read');
 const control = require('./controllingMachine');
 const devName="CCIS-HBS-001";
 let access =0;
 let adminUIDs =["c66759a5"];
-const data = new getDataFromSheet();
+const sheet = new getDataFromSheet();
 let devNum = 0;
-data.getDevNum(devName).then ((value)=>{devNum = value});
-const softSPI = new SoftSPI({
-  clock: 23, // pin number of SCLK
-  mosi: 19, // pin number of MOSI
-  miso: 21, // pin number of MISO
-  client: 24 // pin number of CS
-});
-const mfrc522 = new Mfrc522(softSPI).setResetPin(22).setBuzzerPin(18);
+sheet.getDevNum(devName).then ((value)=>{devNum = value});
+const read = new readClass();
 
 
 const loop = function (result){
   setInterval( async function() {
-    
-    mfrc522.reset();
-    //# Scan for cards
-    let response = mfrc522.findCard();
 
-    if (!response.status) {
-      console.log("No Card");
+    let UID = read.readCards();
+    console.log('UID is: ' UID);
+    if (!UID){
       control.stopMachine();
       return;
     }
-    //# Get the UID of the card
-    response = mfrc522.getUid();
-    if (!response.status) {
-      console.log("UID Scan Error");
-      control.stopMachine();
-      return;
+    if (adminUIDs.includes(UID)){
+      let time = 30;
+      setInterval((interval) => {
+        UID2bAdded = read.readCards();
+        if (UID2bAdded|| time < 0){
+          clearInterval(interval);
+        }
+        time-=1;
+      }, 1000);
+      if (UID2bAdded){
+        //add it with the devNum to the sheet
+        sheet.addUser(UID2bAdded,devNum);
+      }
+      else {
+        console.log("Time over, insert admin card again.");
+      }
     }
-    //# If we have the UID, continue
-    const uid = response.data;
-    let UID = '' + uid[0].toString(16) + uid[1].toString(16) + uid[2].toString(16)+ uid[3].toString(16);
-    // console.log(UID);
-    // let UID = 'ff83aa29';
-    // console.log(devNum);
     
-    let found = data.foundUser(result.values, UID);
+    let found = sheet.foundUser(result.values, UID);
     if (found[0]){
       let index = found[1];
-      await data.getRow(index).then((result)=>{
-             access = (result.data.values[0][devNum]);
+      await sheet.getRow(index).then((result)=>{
+             access = (result.sheet.values[0][devNum]);
             })
     }
     else {
@@ -64,6 +58,6 @@ const loop = function (result){
   },1000)
 }
 
-data.getUsers().then((result)=>{
+sheet.getUsers().then((result)=>{
   loop(result.data);
 })
