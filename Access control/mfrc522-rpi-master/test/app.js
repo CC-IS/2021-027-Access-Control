@@ -32,7 +32,7 @@ const loop = function (result){
       console.log ('Note: Programming mode will end in 30 seconds from now.');
       progmode= true;
       sleep(3000);
-      read.read2bAddedUser(UID).then(()=>{
+      read.read2bAddedUser(UID).then((UID2)=>{
         console.log("Read Card Successfully");
         sheet.addUser(UID2,devNum);
 
