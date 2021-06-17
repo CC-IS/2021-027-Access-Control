@@ -35,6 +35,17 @@
             spreadsheetId: this.spreadsheetId,
             range: `Authorizations!${row+2}:${row+2}`
         });    
-}
+    }
+    foundUser(values, UID){
+        let found = [false,0];
+        // console.log(values, UID);
+        values.forEach((Element,index) => {
+          if (Element[0].includes(UID)){
+            found[0] = true;
+            found[1] = index;
+          }
+        });
+          return found;
+      }
 }
 exports.getDataFromSheet = getDataFromSheet ;
