@@ -10,6 +10,13 @@ let devNum = 0;
 sheet.getDevNum(devName).then ((value)=>{devNum = value});
 const read = new readClass();
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
 
 const loop = function (result){
   setInterval( async function() {
@@ -23,9 +30,10 @@ const loop = function (result){
     let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
       progmode = true;
-      console.log('Entered Programming Mode');
+      console.log('Entered Programming Mode /n please input user card after 3 seconds');
+      sleep(3000);
       UID2bAdded =read.read2bAddedUser();
-      sheet.addUser(UID2bAdded,devNum);
+      await sheet.addUser(UID2bAdded,devNum);
       
     }
     let found = sheet.foundUser(result.values, UID);
