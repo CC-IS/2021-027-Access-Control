@@ -23,9 +23,10 @@ const loop = function (result){
     let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
       progmode = true;
-      UID2bAdded =read.read2bAddedUser()
+      console.log('Entered Programming Mode');
+      UID2bAdded =read.read2bAddedUser();
       sheet.addUser(UID2bAdded,devNum);
-      console.log('user added successfully');
+      
     }
     let found = sheet.foundUser(result.values, UID);
     if (found[0]){
@@ -45,7 +46,7 @@ const loop = function (result){
     else{
       control.stopMachine();
     }
-  },1000)
+  },2000)
 }
 
 sheet.getUsers().then((result)=>{
