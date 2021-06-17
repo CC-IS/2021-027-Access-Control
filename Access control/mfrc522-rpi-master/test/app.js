@@ -4,6 +4,7 @@ const control = require('./controllingMachine');
 const devName="CCIS-HBS-001";
 let access =0;
 let adminUIDs =["c66759a5"];
+let progmode = false;
 const sheet = new getDataFromSheet();
 let devNum = 0;
 sheet.getDevNum(devName).then ((value)=>{devNum = value});
@@ -14,31 +15,18 @@ const loop = function (result){
   setInterval( async function() {
 
     let UID = read.readCards();
-    console.log('UID is: ' + UID);
+    // console.log('UID is: ' + UID);
     if (!UID){
       control.stopMachine();
       return;
     }
     let UID2bAdded = 0;
     if (adminUIDs.includes(UID)){
-      let time = 30;
-      setTimeout(() => {
-          setInterval((interval) => {
-          UID2bAdded = read.readCards();
-          if (UID2bAdded){
-            console.log ("UID 2 b " + UID2bAdded);
-            sheet.addUser(UID2bAdded,devNum);
-          }
-          if (time <0){
-            console.log("Time over, insert admin card again.");
-            clearInterval(interval);
-          }
-          time-=1;
-        }, 1000);
-          
-      }, 5000);
+      progmode = true;
+      UID2bAdded =read.read2bAddedUser()
+      sheet.addUser(UID2bAdded,devNum);
+      console.log('user added successfully');
     }
-    
     let found = sheet.foundUser(result.values, UID);
     if (found[0]){
       let index = found[1];
