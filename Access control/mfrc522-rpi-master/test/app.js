@@ -62,12 +62,12 @@ async function dealWithAdmin(UID){
   console.log('Entered Programming Mode.. please input user card after 3 seconds');
   console.log ('Note: Programming mode will end in 30 seconds from now.');
   progmode= true;
-  sleep(3000);
   let UIDRead ='';
   await read.read2bAddedUser(UID).then((UID2)=>{
     UIDRead = UID2;
+    console.log("Read Card Successfully");
+    sheet.addUser(UIDRead,devNum);
   })
-  console.log("Read Card Successfully");
-  sheet.addUser(UIDRead,devNum);
+  
 
 }
