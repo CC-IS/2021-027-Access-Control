@@ -47,5 +47,12 @@
         });
           return found;
       }
+    async getDevNum(name){
+        let returnedValue = 0;
+        await this.getRow(-1).then((rowData)=>{    
+            returnedValue = (rowData.data.values[0].indexOf(name)); 
+        })
+        return returnedValue;
+    }
 }
 exports.getDataFromSheet = getDataFromSheet ;
