@@ -32,8 +32,10 @@ const loop = function (result){
       progmode = true;
       console.log('Entered Programming Mode /n please input user card after 3 seconds');
       sleep(3000);
-      UID2bAdded = await read.read2bAddedUser();
-      await sheet.addUser(UID2bAdded,devNum);
+      UID2bAdded = read.read2bAddedUser().then (()=>{
+        sheet.addUser(UID2bAdded,devNum);
+      
+      });
       
     }
     let found = sheet.foundUser(result.values, UID);
