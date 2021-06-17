@@ -49,7 +49,7 @@ class read{
             }
             else{
                 console.log('user captured successfully');
-                return UID2;
+                return new Promise.resolve(UID2);
             }  
         }
         else {
