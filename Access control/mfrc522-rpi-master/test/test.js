@@ -1,5 +1,6 @@
-function getDevNum(name){
-    return '' + name;
-  }
+const {read} = require('./read');
+const test = new read();
 
-console.log(getDevNum("ss"));
+setInterval(() => {
+    console.log (test.readCards());    
+}, 2000);
