@@ -5,7 +5,6 @@ const sheet = new getDataFromSheet();
 class read{
     constructor(){
         // const SoftSPI = require("rpi-softspi");
-
         this.Mfrc522 = require("../index");
         this.SoftSPI = require("rpi-softspi");
         this.softSPI = new this.SoftSPI({
@@ -41,6 +40,7 @@ class read{
     }
 
     async read2bAddedUser(UID, devNum){
+        sheet.progmode = true;
         let UID2 = this.readCards(); 
         if (UID2){
             if (UID2 === UID){
