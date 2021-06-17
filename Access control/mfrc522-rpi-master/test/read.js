@@ -35,30 +35,25 @@ const loop = function (result){
     let response = mfrc522.findCard();
 
     if (!response.status) {
-      //console.log("No Card");
-      // control.stopMachine();
-      // return;
+      console.log("No Card");
+      control.stopMachine();
+      return;
     }
     //# Get the UID of the card
     response = mfrc522.getUid();
     if (!response.status) {
-      // console.log("UID Scan Error");
-      // control.stopMachine();
-      // return;
+      console.log("UID Scan Error");
+      control.stopMachine();
+      return;
     }
     //# If we have the UID, continue
     const uid = response.data;
-    // let UID = '' + uid[0].toString(16) + uid[1].toString(16) + uid[2].toString(16)+ uid[3].toString(16);
-    // let found = false;
     let UID = 'ff83aa29';
-
     let found = data.foundUser(result.values, UID);
-    //console.log(found);
     if (found[0]){
       let index = found[1];
-      let pullingAccess = await data.getRow(index).then((result)=>{
+      await data.getRow(index).then((result)=>{
              access = (result.data.values[0][devNum]);
-            //  console.log("after setting the value"); 
             })
     }
     else {
