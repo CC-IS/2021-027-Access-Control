@@ -41,7 +41,7 @@ const loop = function (result){
     if (found[0]){
       let index = found[1];
       await sheet.getRow(index).then((result)=>{
-             access = (result.sheet.values[0][devNum]);
+             access = (result.data.values[0][devNum]);
             })
     }
     else {
