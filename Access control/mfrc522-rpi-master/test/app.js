@@ -7,7 +7,7 @@ let adminUIDs =["c66759a5"];
 const sheet = new getDataFromSheet();
 let devNum = 0;
 sheet.getDevNum(devName).then ((value)=>{devNum = value});
-const read = new readClass();
+const rfid = new readClass();
 let progmode = false;
 
 function sleep(milliseconds) {
@@ -24,14 +24,19 @@ const loop = function (result){
       return;
     }
   
-    let UID = read.readCards();
+    let UID = rfid.readCards();
     if (!UID){
       console.log("Insert Card");
       return;
     }
 
     if (adminUIDs.includes(UID)){
-      dealWithAdmin(UID);
+      progMode = true;
+      //addUser(UID);
+    } else if(progMode){
+      // add user here
+      addUser(UID);
+      progMode = false;
     }
 
     let found = sheet.foundUser(result.values, UID);
@@ -58,15 +63,13 @@ sheet.getUsers().then((result)=>{
   loop(result.data);
 })
 
-async function dealWithAdmin(UID){
+async function addUser(UID){
   console.log('Entered Programming Mode.. please input user card after 3 seconds');
   console.log ('Note: Programming mode will end in 30 seconds from now.');
-  progmode= true;
-  let UIDRead ='';
-  await read.read2bAddedUser(UID).then((UID2)=>{
-    UIDRead = UID2;
+  // progmode= true;
+  //  let UIDRead = await rfid.readCards();
     console.log("Read Card Successfully");
-    sheet.addUser(UIDRead,devNum);
+    sheet.addUser(UID,devNum);
   })
   
 
