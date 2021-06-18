@@ -140,7 +140,7 @@
         this.hasAccessHelper(UID,devNum).then((result)=>{
             access = result;
         })
-        return result;
+        return access;
     }
     async hasAccessHelper(UID,devNum){
         let found;
