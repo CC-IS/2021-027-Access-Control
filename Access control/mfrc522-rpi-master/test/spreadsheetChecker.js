@@ -138,7 +138,8 @@
     async hasAccess(UID,devNum){
         let found;
         await this.getRow(this.getIndex(UID)).then((result)=>{
-            if ((result.data.values[0][devNum])){
+            if ((result.data.values[0][devNum]) ==1 ){
+                console.log((result.data.values[0][devNum]));
                 found =  true;
             } else {
                 found = false;
