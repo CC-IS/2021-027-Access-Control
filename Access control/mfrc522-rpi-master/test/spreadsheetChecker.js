@@ -1,7 +1,11 @@
   class getDataFromSheet{
 
     constructor (){
-        this.progmode = false;
+        this.authorize();
+        // const spreadsheetId = "1XMSZRJNUllFxmb1unSxeeKXc7FFdT1XikAEPd5OSgrA";
+        this.spreadsheetId = "1k3eZkkqm1bWA3lk8gUgfoR6Xpb2vVaX4iaqnizi5iDc";
+    }
+    authorize (){
         const { google } = require("googleapis");
         this.googleSheets = google.sheets({ version: "v4", auth: this.client});
 
@@ -9,13 +13,6 @@
             keyFile: "credentials.json",
             scopes: "https://www.googleapis.com/auth/spreadsheets",
         });
-        this.authorize();
-        
-        
-        // const spreadsheetId = "1XMSZRJNUllFxmb1unSxeeKXc7FFdT1XikAEPd5OSgrA";
-        this.spreadsheetId = "1k3eZkkqm1bWA3lk8gUgfoR6Xpb2vVaX4iaqnizi5iDc";
-    }
-    authorize (){
         this.client = this.auth.getClient();
     }
     async test(){
@@ -76,7 +73,7 @@
                 //  console.log(col);
                  this.changeCell(`${String.fromCharCode(65 + col)}${arr[1]+2}`,1);
                  console.log(`User ${UID} permitted access successfully to ${devName}`);
-                //  this.authorize();
+                  this.authorize();
                  
                  // change col to be 1
              }
