@@ -76,7 +76,6 @@
                 //  console.log(col);
                  this.changeCell(`${String.fromCharCode(65 + col)}${arr[1]+2}`,1);
                  console.log(`User ${UID} permitted access successfully to ${devName}`);
-                 this.class = new this();
                  this.authorize();
                  
                  // change col to be 1
