@@ -32,8 +32,9 @@ sheet.onReady = ()=>{
       } 
 
       else{
-      if (sheet.isUser(UID) && sheet.hasAccess(UID,devNum)){
         console.log("access " + sheet.hasAccess(UID,devNum));
+      if (sheet.isUser(UID) && sheet.hasAccess(UID,devNum)){
+        
         control.runMachine();
       } else if (sheet.isUser(UID) && !sheet.hasAccess(UID,devNum)){
           control.stopMachine();
