@@ -4,6 +4,9 @@
         this.authorize();
         // const spreadsheetId = "1XMSZRJNUllFxmb1unSxeeKXc7FFdT1XikAEPd5OSgrA";
         this.spreadsheetId = "1k3eZkkqm1bWA3lk8gUgfoR6Xpb2vVaX4iaqnizi5iDc";
+        this.getUsers().then((result)=>{
+            this.users = result.data.values;
+        })
     }
     authorize (){
         const { google } = require("googleapis");
@@ -98,12 +101,22 @@
             },
     })
 }
-
+    isUser(UID){
+        return JSON.stringify(this.users).includes([UID]);
+    }
+    getIndex(UID){
+        this.users.forEach((Element,index) => {
+            if (Element[0] && Element[0].includes(UID)){
+              return index;
+            }
+          })
+    }
+    /*
     foundUser(values, UID){
         let found = [false,0];
         // console.log(values, UID);
         console.log("Values of users are: ");
-        console.log(values);
+        // console.log(this.users);
         values.forEach((Element,index) => {
           if (Element[0] && Element[0].includes(UID)){
             found[0] = true;
@@ -112,6 +125,7 @@
         });
           return found;
       }
+      */
     async getDevNum(name){
         let returnedValue = 0;
         await this.getRow(-1).then((rowData)=>{    
@@ -119,6 +133,14 @@
         })
         return returnedValue;
     }
-    
+    async hasAccess(UID,devNum){
+        await this.getRow(this.getIndex(UID)).then((result)=>{
+            if ((result.data.values[0][devNum])){
+                return true;
+            } else {
+                return false;
+            }
+    })   
 }
+  }
 exports.getDataFromSheet = getDataFromSheet ;
