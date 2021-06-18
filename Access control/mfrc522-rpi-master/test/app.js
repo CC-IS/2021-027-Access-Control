@@ -33,11 +33,16 @@ sheet.onReady = ()=>{
 
       else{
         // console.log (devNum + "is dev num");
-        console.log("access " + sheet.hasAccess(UID,devNum));
-      if (sheet.isUser(UID) && sheet.hasAccess(UID,devNum)){
+      let access;
+      sheet.hasAccess(UID,devNum).then((result)=>{
+        access = result;
+      })
+
+      //console.log("access " + sheet.hasAccess(UID,devNum));
+      if (sheet.isUser(UID) && access){
         
         control.runMachine();
-      } else if (sheet.isUser(UID) && !sheet.hasAccess(UID,devNum)){
+      } else if (sheet.isUser(UID) && !access){
           control.stopMachine();
       } else {
         console.log("User doesn't exist.");
