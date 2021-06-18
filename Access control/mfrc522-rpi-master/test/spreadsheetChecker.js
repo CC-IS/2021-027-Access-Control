@@ -68,7 +68,7 @@
              arr = this.foundUser (result.data.values,UID);
             //  console.log(arr);
              if (arr[0]){
-                 console.log(col);
+                //  console.log(col);
                  this.changeCell(`${String.fromCharCode(65 + col)}${arr[1]+2}`,1);
                  console.log(`User ${UID} permitted access successfully to ${devName}`);
                  // change col to be 1
