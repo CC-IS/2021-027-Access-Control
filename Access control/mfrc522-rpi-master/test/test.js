@@ -15,6 +15,9 @@ const sheet = new getDataFromSheet();
 sheet.onReady = ()=>{
     console.log(sheet.isUser(230213));
     console.log(sheet.getIndex(230213));
+    sheet.hasAccess(2313,1).then((result)=>{
+        console.log(result);
+    })
 }
 
 
