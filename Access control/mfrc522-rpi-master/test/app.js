@@ -35,6 +35,8 @@ sheet.onReady = ()=>{
       let access;
       await sheet.hasAccess(UID,devNum).then((result)=>{
         access = result;
+        console.log(access);
+
       })
 
       //console.log("access " + sheet.hasAccess(UID,devNum));
