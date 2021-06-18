@@ -64,13 +64,10 @@ function main(){
 
 async function addUser(UID){
   console.log("Initiating add user");
-  // progmode= true;
-  //  let UIDRead = await rfid.readCards();
     sheet.addUser(UID,devNum,devName).then(()=>{
-      // sheet = new getDataFromSheet();
       progmode = false;
-      
       clearInterval(loop);
+      await DelayNode(5000);
       main();
     });
   }
