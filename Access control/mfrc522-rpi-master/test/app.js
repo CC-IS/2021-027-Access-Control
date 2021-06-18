@@ -30,7 +30,6 @@ sheet.onReady = ()=>{
       } else if(progmode && !adminUIDs.includes(UID)){
         await addUser(UID);
       } 
-
       else{
         // console.log (devNum + "is dev num");
       let access;
@@ -39,6 +38,7 @@ sheet.onReady = ()=>{
       })
 
       //console.log("access " + sheet.hasAccess(UID,devNum));
+      console.log(access);
       if (sheet.isUser(UID) && access){
         
         control.runMachine();
