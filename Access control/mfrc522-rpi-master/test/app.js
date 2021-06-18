@@ -64,10 +64,10 @@ sheet.getUsers().then((result)=>{
 })
 
 async function addUser(UID){
-  console.log("inside adduser");
+  console.log("Initiating add user");
   // progmode= true;
   //  let UIDRead = await rfid.readCards();
-    sheet.addUser(UID,devNum).then(()=>{
+    sheet.addUser(UID,devNum,devName).then(()=>{
       progmode = false;
     });
   }
