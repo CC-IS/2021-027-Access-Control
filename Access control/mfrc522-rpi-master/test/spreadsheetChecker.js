@@ -62,7 +62,7 @@
         }
     
 
-    async addUser(UID,col){
+    async addUser(UID,col,devName){
         let arr = [];
         await this.getUsers().then((result)=>{
              arr = this.foundUser (result.data.values,UID);
@@ -70,12 +70,13 @@
              if (arr[0]){
                  console.log(col);
                  this.changeCell(`${String.fromCharCode(65 + col)}${arr[1]+2}`,1);
+                 console.log(`User ${UID} permitted access successfully to ${devName}`);
                  // change col to be 1
              }
              else{
-                 console.log("should be printed 1 time");
                 this.addNewRow(UID).then(()=>{
-                    this.addUser(UID,col);
+                    console.log(`User ${UID} was added to database. Granting access...`)
+                    this.addUser(UID,col,devName);
                 })
                 //add new line with zeros
                  //call adduser again
