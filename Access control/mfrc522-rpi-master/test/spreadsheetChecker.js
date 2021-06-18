@@ -139,9 +139,9 @@
        
         let found;
         await this.getRow(this.getIndex(UID)).then((result)=>{
-            console.log("cell");
-            console.log(result.data.values);
-            if ((result.data.values[devNum][0]) ==1 ){
+            // console.log("cell");
+            // console.log(result.data.values);
+            if ((result.data.values[0][devNum]) ==1 ){
                 found =  true;
             } else {
                 found = false;
