@@ -75,7 +75,7 @@
 
     async addUser(UID,col,devName){
         if (this.isUser(UID)){
-            this.changeCell(`${String.fromCharCode(65 + col)}${col+2}`,1);
+            this.changeCell(`${String.fromCharCode(65 + col)}${this.getIndex(UID)}`,1);
             console.log(`User ${UID} permitted access successfully to ${devName}`);
            this.authorize();
         } else{
@@ -136,7 +136,6 @@
         return returnedValue;
     }
     async hasAccess(UID,devNum){
-       
         let found;
         await this.getRow(this.getIndex(UID)).then((result)=>{
             // console.log("cell");
