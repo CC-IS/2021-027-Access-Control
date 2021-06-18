@@ -145,7 +145,8 @@
     async hasAccessHelper(UID,devNum){
         let found;
         await this.getRow(this.getIndex(UID)).then((result)=>{
-            console.log("cell" + result.data.values);
+            console.log("cell");
+            console.log(result.data.values);
             if ((result.data.values[devNum][0]) ==1 ){
                 found =  true;
             } else {
