@@ -57,6 +57,7 @@ const loop = function (result){
 
 function main(){
   sheet.getUsers().then((result)=>{
+    console.log(result.data);
     loop(result.data);
   })
 }
