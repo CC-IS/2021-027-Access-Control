@@ -12,63 +12,39 @@ const rfid = new readClass();
 let progmode = false;
 let terminateID;
 
-main ();
+sheet.onReady = ()=>{
+  const loop = function (result){
 
-const loop = function (result){
-  setInterval( ( async function() {
-    let UID = rfid.readCards();
-    if (!UID){
-      console.log("Insert Card");
-      return;
-    }
-    console.log(UID);
-    if (adminUIDs.includes(UID)){
-      progmode = true;
-      console.log('Entered Programming Mode.. please input user card after 3 seconds');
-      console.log ('Note: Programming mode will end in 30 seconds from now.');
-      setTimeout(()=>{ progMode = false;}, 30000);
-    } else if(progmode && !adminUIDs.includes(UID)){
-      await addUser(UID);
-    } 
+    setInterval( ( async function() {
+      let UID = rfid.readCards();
+      if (!UID){
+        console.log("Insert Card");
+        return;
+      }
+      console.log(UID);
+      if (adminUIDs.includes(UID)){
+        progmode = true;
+        console.log('Entered Programming Mode.. please input user card after 3 seconds');
+        console.log ('Note: Programming mode will end in 30 seconds from now.');
+        setTimeout(()=>{ progMode = false;}, 30000);
+      } else if(progmode && !adminUIDs.includes(UID)){
+        await addUser(UID);
+      } 
 
-    else{
-    if (sheet.isUser(UID) && sheet.hasAccess(UID,devNum)){
-      control.runMachine();
-    } else if (sheet.isUser(UID) && !sheet.hasAccess(UID,devNum)){
-        control.stopMachine();
-    } else {
-      console.log("User doesn't exist.");
-      return;
-    }
-    
-/*
-    let found = sheet.foundUser(result.values, UID);
-
-    if (found[0]){
-      await sheet.getRow(found[1]).then((result)=>{
-             access = (result.data.values[0][devNum]);
-            if (access==1){
-              control.runMachine();
-            }
-            else{
-              control.stopMachine();
-            }
-            }).catch(()=>{
-              console.log("Value missing from sheet");
-            })
-    }
-    */
-    
-    }
-  }),2000)
+      else{
+      if (sheet.isUser(UID) && sheet.hasAccess(UID,devNum)){
+        control.runMachine();
+      } else if (sheet.isUser(UID) && !sheet.hasAccess(UID,devNum)){
+          control.stopMachine();
+      } else {
+        console.log("User doesn't exist.");
+        return;
+      }
+      }
+    }),2000)
+  }
+  loop();
 }
-
-function main(){
-  sheet.getUsers().then((result)=>{
-    loop(result.data);
-  })
-}
-
 async function addUser(UID){
   console.log("Initiating add user");
     sheet.addUser(UID,devNum,devName).then(()=>{
