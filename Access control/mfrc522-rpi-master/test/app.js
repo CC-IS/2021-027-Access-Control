@@ -4,7 +4,7 @@ const control = require('./controllingMachine');
 const devName="CCIS-VBS-001";
 let access =0;
 let adminUIDs =["c66759a5"];
-let sheet = new getDataFromSheet();
+const sheet = new getDataFromSheet();
 let devNum = 0;
 sheet.getDevNum(devName).then ((value)=>{devNum = value});
 const rfid = new readClass();
@@ -68,7 +68,7 @@ async function addUser(UID){
   // progmode= true;
   //  let UIDRead = await rfid.readCards();
     sheet.addUser(UID,devNum,devName).then(()=>{
-      sheet = new getDataFromSheet();
+      // sheet = new getDataFromSheet();
       progmode = false;
       
     });
