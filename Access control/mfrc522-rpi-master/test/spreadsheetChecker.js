@@ -6,8 +6,14 @@
         this.spreadsheetId = "1k3eZkkqm1bWA3lk8gUgfoR6Xpb2vVaX4iaqnizi5iDc";
         this.getUsers().then((result)=>{
             this.users = result.data.values;
+            this.onReady();
         })
     }
+
+    onReady(){
+
+    }
+
     authorize (){
         const { google } = require("googleapis");
         this.googleSheets = google.sheets({ version: "v4", auth: this.client});
@@ -102,14 +108,22 @@
     })
 }
     isUser(UID){
-        return JSON.stringify(this.users).includes([UID]);
+        // var _this = this;
+        return JSON.stringify(this.users).includes(UID);
+
     }
     getIndex(UID){
+        // this.getUsers().then((result){
+        //     usersresult.data.values
+        // })
+        let index2;
         this.users.forEach((Element,index) => {
-            if (Element[0] && Element[0].includes(UID)){
-              return index;
+            if (Element[0] && Element[0] == UID){
+                console.log(index);
+                index2 = index;
             }
           })
+          return index2;
     }
     /*
     foundUser(values, UID){
