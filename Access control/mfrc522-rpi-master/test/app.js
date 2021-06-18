@@ -11,9 +11,9 @@ sheet.getDevNum(devName).then ((value)=>{devNum = value});
 const rfid = new readClass();
 let progmode = false;
 let terminateID;
-
+let loop;
 sheet.onReady = ()=>{
-  const loop = function (result){
+  loop = function (result){
 
     setInterval( ( async function() {
       let UID = rfid.readCards();
