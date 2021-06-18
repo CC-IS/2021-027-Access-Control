@@ -32,7 +32,7 @@ sheet.onReady = ()=>{
       } 
 
       else{
-        console.log (devNum + "is dev num");
+        // console.log (devNum + "is dev num");
         console.log("access " + sheet.hasAccess(UID,devNum));
       if (sheet.isUser(UID) && sheet.hasAccess(UID,devNum)){
         
