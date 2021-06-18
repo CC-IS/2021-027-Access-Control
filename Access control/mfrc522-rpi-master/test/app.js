@@ -4,7 +4,7 @@ const control = require('./controllingMachine');
 const devName="CCIS-VBS-001";
 let access =0;
 let adminUIDs =["c66759a5"];
-const sheet = new getDataFromSheet();
+let sheet = new getDataFromSheet();
 let devNum = 0;
 sheet.getDevNum(devName).then ((value)=>{devNum = value});
 const rfid = new readClass();
