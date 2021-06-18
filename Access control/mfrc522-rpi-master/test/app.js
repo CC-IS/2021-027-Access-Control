@@ -70,7 +70,7 @@ async function addUser(UID){
     sheet.addUser(UID,devNum,devName).then(()=>{
       // sheet = new getDataFromSheet();
       progmode = false;
-      
+      console.log(result.data.values);
     });
   }
   
