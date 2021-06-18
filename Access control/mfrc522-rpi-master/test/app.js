@@ -22,7 +22,8 @@ function sleep(milliseconds) {
 const loop = function (result){
   setInterval( (intervalID, async function() {
     terminateID = intervalID;
-  
+    console.log("Insert Card");
+
     let UID = rfid.readCards();
     if (!UID){
       console.log("Insert Card");
