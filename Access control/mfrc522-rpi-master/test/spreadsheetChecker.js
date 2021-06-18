@@ -13,6 +13,18 @@
         // const spreadsheetId = "1XMSZRJNUllFxmb1unSxeeKXc7FFdT1XikAEPd5OSgrA";
         this.spreadsheetId = "1k3eZkkqm1bWA3lk8gUgfoR6Xpb2vVaX4iaqnizi5iDc";
     }
+    async test(){
+        return await this.googleSheets.spreadsheets.values.update({
+            auth: this.auth,
+            spreadsheetId: this.spreadsheetId,
+            range:['Authorizations!A9'],
+            valueInputOption: 'USER-ENTERED',
+            resource: {
+                values:[[2]],
+            }
+            }) 
+        }
+    
 
     async getBatch() {
         return await this.googleSheets.spreadsheets.values.batchGet({
@@ -38,37 +50,55 @@
         });    
     }
     async changeCell(A1,value){
-        await (await this.googleSheets.spreadsheets.values.update({
+        await this.googleSheets.spreadsheets.values.update({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
-            range: A1,
-            valueInputOption:'userInput',
+            range:[`Authorizations!${A1}`],
+            valueInputOption: 'USER-ENTERED',
             resource: {
-                value: value
+                values:[[value]],
             }
-        })).data
+            }) 
+        }
+    
 
-    }
     async addUser(UID,col){
         let arr = [];
         await this.getUsers().then((result)=>{
-             arr = this.foundUser (result.data.values);
+             arr = this.foundUser (result.data.values,UID);
+            //  console.log(arr);
              if (arr[0]){
-                 this.changeCell(A8,"Hello");
+                 console.log(col);
+                 this.changeCell(`${String.fromCharCode(65 + col)}${arr[1]+2}`,1);
                  // change col to be 1
              }
              else{
-                 //add new line with zeros
+                 console.log("should be printed 1 time");
+                this.addNewRow(UID).then(()=>{
+                    this.addUser(UID,col);
+                })
+                //add new line with zeros
                  //call adduser again
              }
         })
     }
+    async addNewRow(UID){
+        await this.googleSheets.spreadsheets.values.append({
+            auth: this.auth,
+            spreadsheetId: this.spreadsheetId,
+            range: "Authorizations!A:B",
+            valueInputOption: "USER_ENTERED",
+            resource: {
+              values: [[UID, 0,0,0,0,0,0]],
+            },
+    })
+}
 
     foundUser(values, UID){
         let found = [false,0];
         // console.log(values, UID);
         values.forEach((Element,index) => {
-          if (Element[0].includes(UID)){
+          if (Element[0] && Element[0].includes(UID)){
             found[0] = true;
             found[1] = index;
           }
