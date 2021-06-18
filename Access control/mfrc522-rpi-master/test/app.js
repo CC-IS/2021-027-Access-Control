@@ -28,10 +28,22 @@ const loop = function (result){
       console.log ('Note: Programming mode will end in 30 seconds from now.');
       setTimeout(()=>{ progMode = false;}, 30000);
     } else if(progmode && !adminUIDs.includes(UID)){
-      addUser(UID);
+      await addUser(UID);
     } 
+
     else{
+    if (sheet.isUser(UID) && sheet.hasAccess(UID,devNum)){
+      control.runMachine();
+    } else if (sheet.isUser(UID) && !sheet.hasAccess(UID,devNum)){
+        control.stopMachine();
+    } else {
+      console.log("User doesn't exist.");
+      return;
+    }
+    
+/*
     let found = sheet.foundUser(result.values, UID);
+
     if (found[0]){
       await sheet.getRow(found[1]).then((result)=>{
              access = (result.data.values[0][devNum]);
@@ -45,10 +57,8 @@ const loop = function (result){
               console.log("Value missing from sheet");
             })
     }
-    else {
-      console.log("User doesn't exist.");
-      return;
-    }
+    */
+    
     }
   }),2000)
 }
