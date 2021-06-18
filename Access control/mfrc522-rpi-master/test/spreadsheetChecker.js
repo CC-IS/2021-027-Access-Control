@@ -73,7 +73,7 @@
                 //  console.log(col);
                  this.changeCell(`${String.fromCharCode(65 + col)}${arr[1]+2}`,1);
                  console.log(`User ${UID} permitted access successfully to ${devName}`);
-                  this.authorize();
+                this.authorize();
                  
                  // change col to be 1
              }
@@ -102,6 +102,8 @@
     foundUser(values, UID){
         let found = [false,0];
         // console.log(values, UID);
+        console.log("Values of users are: ");
+        console.log(values);
         values.forEach((Element,index) => {
           if (Element[0] && Element[0].includes(UID)){
             found[0] = true;
