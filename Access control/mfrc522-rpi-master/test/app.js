@@ -35,12 +35,12 @@ sheet.onReady = ()=>{
       let access;
       await sheet.hasAccess(UID,devNum).then((result)=>{
         access = result;
-        console.log(access);
+        // console.log(access);
 
       })
 
       //console.log("access " + sheet.hasAccess(UID,devNum));
-      console.log(access);
+      // console.log(access);
       if (sheet.isUser(UID) && access){
         
         control.runMachine();
