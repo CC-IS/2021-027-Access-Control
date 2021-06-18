@@ -11,19 +11,11 @@ sheet.getDevNum(devName).then ((value)=>{devNum = value});
 const rfid = new readClass();
 let progmode = false;
 let terminateID;
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
 
+main ();
 const loop = function (result){
-  setInterval( (intervalID, async function() {
-    terminateID = intervalID;
-    console.log("Insert Card");
-
+  setInterval( ( async function() {
+    // terminateID = intervalID;
     let UID = rfid.readCards();
     if (!UID){
       console.log("Insert Card");
@@ -76,9 +68,9 @@ async function addUser(UID){
     sheet.addUser(UID,devNum,devName).then(()=>{
       // sheet = new getDataFromSheet();
       progmode = false;
-      terminate = true;
+      
+      clearInterval(loop);
       main();
-      clearInterval(terminateID);
     });
   }
   
