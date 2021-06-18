@@ -41,6 +41,8 @@ const loop = function (result){
             else{
               control.stopMachine();
             }
+            }).catch(()=>{
+              console.log("Value missing from sheet");
             })
     }
     else {
@@ -62,7 +64,6 @@ async function addUser(UID){
     sheet.addUser(UID,devNum,devName).then(()=>{
       progmode = false;
       clearInterval(loop);
-      // main();
     });
   }
   
