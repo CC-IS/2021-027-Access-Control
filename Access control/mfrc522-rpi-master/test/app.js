@@ -50,6 +50,7 @@ const loop = function (result){
             })
     }
     else {
+      console.log(result.data.values);
       console.log("User doesn't exist.");
       return;
     }
@@ -70,7 +71,7 @@ async function addUser(UID){
     sheet.addUser(UID,devNum,devName).then(()=>{
       // sheet = new getDataFromSheet();
       progmode = false;
-      console.log(result.data.values);
+      
     });
   }
   
