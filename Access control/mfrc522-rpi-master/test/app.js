@@ -13,9 +13,9 @@ let progmode = false;
 let terminateID;
 
 main ();
+
 const loop = function (result){
   setInterval( ( async function() {
-    // terminateID = intervalID;
     let UID = rfid.readCards();
     if (!UID){
       console.log("Insert Card");
@@ -31,7 +31,6 @@ const loop = function (result){
       addUser(UID);
     } 
     else{
-      
     let found = sheet.foundUser(result.values, UID);
     if (found[0]){
       await sheet.getRow(found[1]).then((result)=>{
@@ -45,19 +44,15 @@ const loop = function (result){
             })
     }
     else {
-      console.log(result.data.values);
       console.log("User doesn't exist.");
       return;
     }
-    
     }
-
   }),2000)
 }
 
 function main(){
   sheet.getUsers().then((result)=>{
-    // console.log(result.data);
     loop(result.data);
   })
 }
