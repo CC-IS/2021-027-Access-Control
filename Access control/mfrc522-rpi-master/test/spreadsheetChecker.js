@@ -135,15 +135,8 @@
         })
         return returnedValue;
     }
-    hasAccess(UID,devNum){
-        
-        let access = this.hasAccessHelper(UID,devNum).then((result)=>{
-            return result;
-        })
-        
-        return access;
-    }
-    async hasAccessHelper(UID,devNum){
+    async hasAccess(UID,devNum){
+       
         let found;
         await this.getRow(this.getIndex(UID)).then((result)=>{
             console.log("cell");
@@ -156,5 +149,6 @@
     })   
     return found;
 }
+        
   }
 exports.getDataFromSheet = getDataFromSheet ;
