@@ -1,4 +1,4 @@
-const config = require ('/boot/config.dir');
+const config = require ('/boot/config.json');
 const {getDataFromSheet} = require('./spreadsheetChecker');
 const {readClass} = require('./read');
 const control = require('./controllingMachine');
