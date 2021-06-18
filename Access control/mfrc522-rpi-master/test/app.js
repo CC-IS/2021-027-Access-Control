@@ -1,7 +1,7 @@
 const {getDataFromSheet} = require('./spreadsheetChecker');
 const {readClass} = require('./read');
 const control = require('./controllingMachine');
-const devName="CCIS-HBS-001";
+const devName="CCIS-VBS-001";
 let access =0;
 let adminUIDs =["c66759a5"];
 const sheet = new getDataFromSheet();
