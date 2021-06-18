@@ -74,27 +74,16 @@
     
 
     async addUser(UID,col,devName){
-        let arr = [];
-        await this.getUsers().then((result)=>{
-             arr = this.foundUser (result.data.values,UID);
-            //  console.log(arr);
-             if (arr[0]){
-                //  console.log(col);
-                 this.changeCell(`${String.fromCharCode(65 + col)}${arr[1]+2}`,1);
-                 console.log(`User ${UID} permitted access successfully to ${devName}`);
-                this.authorize();
-                 
-                 // change col to be 1
-             }
-             else{
-                this.addNewRow(UID).then(()=>{
-                    console.log(`User ${UID} was added to database. Granting access...`)
-                    this.addUser(UID,col,devName);
-                })
-                //add new line with zeros
-                 //call adduser again
-             }
+        if (this.isUser(UID)){
+            this.changeCell(`${String.fromCharCode(65 + col)}${col+2}`,1);
+            console.log(`User ${UID} permitted access successfully to ${devName}`);
+           this.authorize();
+        } else{
+            this.addNewRow(UID).then(()=>{
+            console.log(`User ${UID} was added to database. Granting access...`)
+            this.addUser(UID,col,devName);
         })
+    }
     }
     async addNewRow(UID){
         await this.googleSheets.spreadsheets.values.append({
