@@ -69,7 +69,6 @@ async function addUser(UID){
   //  let UIDRead = await rfid.readCards();
     sheet.addUser(UID,devNum,devName).then(()=>{
       progmode = false;
-    sheet = new getDataFromSheet();
     });
   }
   
