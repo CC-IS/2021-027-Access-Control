@@ -1,6 +1,4 @@
-const {read} = require('./read');
-const test = new read();
+const {getDataFromSheet} = require('./spreadsheetChecker');
+const sheet = new getDataFromSheet();
 
-setInterval(() => {
-    console.log (test.readCards());    
-}, 2000);
+sheet.addUser('this is UID', 1);
