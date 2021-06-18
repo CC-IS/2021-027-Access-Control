@@ -13,7 +13,7 @@ let progmode = false;
 let terminateID;
 let loop;
 sheet.onReady = ()=>{
-  loop = function (result){
+  loop =async  function (result){
 
     setInterval( ( async function() {
       let UID = rfid.readCards();
@@ -33,7 +33,7 @@ sheet.onReady = ()=>{
       else{
         // console.log (devNum + "is dev num");
       let access;
-      sheet.hasAccess(UID,devNum).then((result)=>{
+      await sheet.hasAccess(UID,devNum).then((result)=>{
         access = result;
       })
 
