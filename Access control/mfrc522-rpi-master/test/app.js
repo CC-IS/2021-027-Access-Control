@@ -1,21 +1,23 @@
+const config = require ('/boot/config.dir');
 const {getDataFromSheet} = require('./spreadsheetChecker');
 const {readClass} = require('./read');
 const control = require('./controllingMachine');
 const { managedidentities } = require('googleapis/build/src/apis/managedidentities');
-const devName="CCIS-VBS-001";
-let access =0;
-let adminUIDs =["c66759a5"];
+// const devName="CCIS-VBS-001";
+const devName = config.device;
+const adminUIDs = config.admins;
+// let adminUIDs =["c66759a5"];
 const sheet = new getDataFromSheet();
-let devNum = 0;
-sheet.getDevNum(devName).then ((value)=>{devNum = value});
+let devNum;
 const rfid = new readClass();
 let progmode = false;
-let terminateID;
 let loop;
 sheet.onReady = ()=>{
   loop =async  function (result){
 
     setInterval( ( async function() {
+      sheet.getDevNum(devName).then ((value)=>{devNum = value});
+
       let UID = rfid.readCards();
       if (!UID){
         console.log("Insert Card");
@@ -31,12 +33,9 @@ sheet.onReady = ()=>{
         await addUser(UID);
       } 
       else{
-        // console.log (devNum + "is dev num");
       let access;
       await sheet.hasAccess(UID,devNum).then((result)=>{
         access = result;
-        // console.log(access);
-
       })
 
       //console.log("access " + sheet.hasAccess(UID,devNum));
