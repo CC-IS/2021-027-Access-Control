@@ -119,7 +119,6 @@
         let index2;
         this.users.forEach((Element,index) => {
             if (Element[0] && Element[0] == UID){
-                console.log(index);
                 index2 = index;
             }
           })
@@ -148,13 +147,15 @@
         return returnedValue;
     }
     async hasAccess(UID,devNum){
+        let found;
         await this.getRow(this.getIndex(UID)).then((result)=>{
             if ((result.data.values[0][devNum])){
-                return true;
+                found =  true;
             } else {
-                return false;
+                found = false;
             }
     })   
+    return found;
 }
   }
 exports.getDataFromSheet = getDataFromSheet ;
