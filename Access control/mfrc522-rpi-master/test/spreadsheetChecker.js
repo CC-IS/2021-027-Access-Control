@@ -3,12 +3,15 @@
     constructor (){
         this.progmode = false;
         const { google } = require("googleapis");
+        this.googleSheets = google.sheets({ version: "v4", auth: this.client});
+
         this.auth = new google.auth.GoogleAuth({
             keyFile: "credentials.json",
             scopes: "https://www.googleapis.com/auth/spreadsheets",
         });
         this.authorize();
-        this.googleSheets = google.sheets({ version: "v4", auth: this.client});
+        
+        
         // const spreadsheetId = "1XMSZRJNUllFxmb1unSxeeKXc7FFdT1XikAEPd5OSgrA";
         this.spreadsheetId = "1k3eZkkqm1bWA3lk8gUgfoR6Xpb2vVaX4iaqnizi5iDc";
     }
@@ -73,6 +76,7 @@
                 //  console.log(col);
                  this.changeCell(`${String.fromCharCode(65 + col)}${arr[1]+2}`,1);
                  console.log(`User ${UID} permitted access successfully to ${devName}`);
+                 constructor();
                  
                  // change col to be 1
              }
