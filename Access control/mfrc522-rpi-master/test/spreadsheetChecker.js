@@ -137,9 +137,10 @@
     }
     hasAccess(UID,devNum){
         let access;
-        await this.hasAccessHelper(UID,devNum).then((result)=>{
+        this.hasAccessHelper(UID,devNum).then((result)=>{
             access = result;
         })
+        console.log("access is " + access);
         return access;
     }
     async hasAccessHelper(UID,devNum){
