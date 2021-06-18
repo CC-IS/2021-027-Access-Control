@@ -135,7 +135,14 @@
         })
         return returnedValue;
     }
-    async hasAccess(UID,devNum){
+    hasAccess(UID,devNum){
+        let access;
+        this.hasAccessHelper(UID,devNum).then((result)=>{
+            access = result;
+        })
+        return result;
+    }
+    async hasAccessHelper(UID,devNum){
         let found;
         await this.getRow(this.getIndex(UID)).then((result)=>{
             if ((result.data.values[0][devNum]) ==1 ){
