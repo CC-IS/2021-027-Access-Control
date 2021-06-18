@@ -67,8 +67,7 @@ async function addUser(UID){
     sheet.addUser(UID,devNum,devName).then(()=>{
       progmode = false;
       clearInterval(loop);
-      await DelayNode(5000);
-      main();
+      // main();
     });
   }
   
