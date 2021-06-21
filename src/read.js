@@ -20,14 +20,12 @@ class read{
 
         if (!response.status) {
         console.log("No Card");
-        control.stopMachine();
         return false;
         }
         //# Get the UID of the card
         response = this.mfrc522.getUid();
         if (!response.status) {
         console.log("UID Scan Error");
-        control.stopMachine();
         return false;
         }
         //# If we have the UID, continue
