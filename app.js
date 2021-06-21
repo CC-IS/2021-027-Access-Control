@@ -66,7 +66,7 @@ sheet.onReady = ()=>{
         controller.mode = 'idle';
       } else {
         console.log("User doesn't exist.");
-        hw.mode = 'idle
+        hw.mode = 'idle'
         return;
       }
       }
