@@ -18,7 +18,7 @@
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
             range: 'Authorizations!B2:B2'
-        })).data.values[0];
+        })).data;
     }
 
     authorize (){
