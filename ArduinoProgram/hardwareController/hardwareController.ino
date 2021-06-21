@@ -110,18 +110,18 @@ void setup() {
   });
   
   parser.on(IP_ADDRESS, [](unsigned char * input, int size){
-    ipAddress[0] = ((input[2]&0b01111111)<<1) & ((input[3]&0b01000000)>>6);
+    ipAddress[0] = ((input[2]&0b01111111)<<1) + ((input[3]&0b01000000)>>6);
     ipAddress[1] = '.';
-    ipAddress[2] = ((input[3]&0b00111111)<<2) & ((input[4]&0b01100000)>>5);
+    ipAddress[2] = ((input[3]&0b00111111)<<2) + ((input[4]&0b01100000)>>5);
     ipAddress[3] = '.';
-    ipAddress[4] = ((input[4]&0b00011111)<<3) & ((input[5]&0b01110000)>>4);
+    ipAddress[4] = ((input[4]&0b00011111)<<3) + ((input[5]&0b01110000)>>4);
     ipAddress[5] = '.';
-    ipAddress[6] = ((input[5]&0b00001111)<<4) & ((input[6]&0b00001111)>>2);
+    ipAddress[6] = ((input[5]&0b00001111)<<4) + ((input[6]&0b00001111)>>2);
     parser.startMessage();
-    parser.sendPacket(REPORT, SWITCH_STATE, ipAddress[0]);
-    parser.sendPacket(REPORT, SWITCH_STATE, ipAddress[2]);
-    parser.sendPacket(REPORT, SWITCH_STATE, ipAddress[4]);
-    parser.sendPacket(REPORT, SWITCH_STATE, ipAddress[6]);
+    for(int i=0; i<7; i++){
+      if(!(i%2)) Serial.print(ipAddress[i],DEC);
+      else Serial.print(ipAddress[i]);
+    }
     parser.endMessage();
   });
 
