@@ -6,7 +6,7 @@ class read{
     constructor(){
         // const SoftSPI = require("rpi-softspi");
         this.time = 30;
-        this.Mfrc522 = require("../index");
+        this.Mfrc522 = require("./src/index");
         this.SoftSPI = require("rpi-softspi");
         this.softSPI = new this.SoftSPI({
             clock: 23, // pin number of SCLK
