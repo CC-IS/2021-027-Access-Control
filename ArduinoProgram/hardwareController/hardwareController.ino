@@ -99,13 +99,19 @@ void setup() {
     parser.sendPacket(REPORT, SWITCH_STATE, powSwitch.state);
   });
 
+  parser.on(E_STOP, [](unsigned char * input, int size){
+    parser.sendPacket(REPORT, E_STOP, eStop.state);
+  });
+
   parser.on(MODE, [](unsigned char * input, int size){
     mode = input[2];
     writeDisplay();
     if(mode == ENABLE){
       digitalWrite(notifyPin,HIGH);
       digitalWrite(relayPin,HIGH);
-    } else if(mode == PROG){
+    } else if(mode == DISABLE && !powSwitch.state){
+      digitalWrite(notifyPin, LOW);
+      digitalWrite(relayPin, LOW);
     }
   });
   
@@ -116,7 +122,7 @@ void setup() {
     ipAddress[3] = '.';
     ipAddress[4] = ((input[4]&0b00011111)<<3) + ((input[5]&0b01110000)>>4);
     ipAddress[5] = '.';
-    ipAddress[6] = ((input[5]&0b00001111)<<4) + ((input[6]&0b00001111)>>2);
+    ipAddress[6] = ((input[5]&0b00001111)<<4) + ((input[6]&0b00001111));
     parser.startMessage();
     for(int i=0; i<7; i++){
       if(!(i%2)) Serial.print(ipAddress[i],DEC);
