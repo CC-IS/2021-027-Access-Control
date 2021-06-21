@@ -50,7 +50,7 @@ sheet.onReady = ()=>{
       })
       let isAdminPresent;
       await sheet.isAdminPresent().then((result)=>{
-        isAdminPresent =  result.data.values[0][0]);
+        isAdminPresent =  result.data.values[0][0];
       })
 
       if ((sheet.isUser(UID) && access && isAdminPresent == 1)){
