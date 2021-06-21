@@ -13,6 +13,13 @@
     onReady(){
 
     }
+    async isAdminPresent(){
+        return await (this.googleSheets.spreadsheets.values.get({
+            auth: this.auth,
+            spreadsheetId: this.spreadsheetId,
+            range: 'Authorizations!B2:B2'
+        }));
+    }
 
     authorize (){
         const { google } = require("googleapis");
