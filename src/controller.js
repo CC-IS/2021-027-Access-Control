@@ -57,7 +57,7 @@ class HardwareControl extends EventEmitter{
     _this.parser.onOpen = ()=> {
       _this.parser.sendPacket([127, READY]);
       _this.parser.sendPacket([1,SWITCH_STATE]);
-      _this.parser.sendPacket([1,E_STOP]);
+      _this.parser.sendPacket([1,E_STOPPED]);
     };
 
     _this.onPortNotFound = ()=>{};
@@ -74,13 +74,11 @@ class HardwareControl extends EventEmitter{
 
   }
 
-  sendIpAddress(){
+  sendIpAddress(ip){
     var _this = this;
-    var test = '10.10.10.10';
+    var test = ip;
     var nums = test.split('.').map(el=>parseInt(el));
     var addrArr = [];
-    console.log(nums);
-    console.log((nums[1] & 0b11111100) >> 2);
     addrArr[0] = (nums[0] & 0b11111110) >> 1;
     addrArr[1] = ((nums[0] & 0b00000001) << 6) + ((nums[1] & 0b11111100) >> 2);
     addrArr[2] = ((nums[1] & 0b00000011) << 5) + ((nums[2] & 0b11111000) >> 3);
@@ -88,7 +86,6 @@ class HardwareControl extends EventEmitter{
     addrArr[4] = ((nums[3] & 0b00001111));
     addrArr.unshift(1, IP_ADDRESS);
 
-    console.log(addrArr);
     _this.parser.sendPacket(addrArr);
   }
 

@@ -1,18 +1,19 @@
 #include "serialParse.h"
 #include "timeOut.h"
 #include "Button.h"
+#include "mkrSpcLogo.h"
 
-//#include <SPI.h>
-//#include <Wire.h>
-//#include <Adafruit_GFX.h>
-//#include <Adafruit_SSD1306.h>
-//
-//#define SCREEN_WIDTH 128 // OLED display width, in pixels
-//#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
-//// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-//#define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-//Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // declare the terms for the parser commands
 
@@ -49,21 +50,43 @@ char ipAddress[7];
 int notifyPin = 13;
 int relayPin = 9;
 
-//void eStopText(){
-//  display.clearDisplay();
-//  display.setTextSize(2); // Normal 1:1 pixel scale
-//  display.setTextColor(SSD1306_WHITE); // Draw white text
-//  display.cp437(true); // Use full 256 char 'Code Page 437' font
-//  display.setCursor(0,7); // Start at top-left corner
-//  display.println(F("Emergency"));
-//  display.println(F("Stop"));
-//  display.println(F("Engaged"));
-//  display.display();
-//}
+void eStopText(){
+ display.clearDisplay();
+ display.setTextSize(2); // Normal 1:1 pixel scale
+ display.setTextColor(SSD1306_WHITE); // Draw white text
+ display.cp437(true); // Use full 256 char 'Code Page 437' font
+ display.setCursor(0,7); // Start at top-left corner
+ display.println(F("Emergency"));
+ display.println(F("Stop"));
+ display.println(F("Engaged"));
+ display.display();
+}
+
+void splash(){
+  display.clearDisplay();
+
+  display.setCursor(0, 0);
+  display.drawBitmap(
+    (display.width() - LOGO_WIDTH) / 2,
+    0,
+    mkrLogo, LOGO_WIDTH, LOGO_HEIGHT, 1);
+  display.setTextSize(1); // Normal 1:1 pixel scale
+  display.setTextColor(SSD1306_WHITE); // Draw white text
+  display.cp437(true); // Use full 256 char 'Code Page 437' font
+  if(mode == ENABLE){
+    display.setCursor(15,52); // Start at top-left corner
+    display.println(F("System Enabled"));
+  }
+  else if(mode == PROG){
+    display.setCursor(22,52); // Start at top-left corner
+    display.println(F("Tap New RFID."));
+  }
+  display.display();
+}
 
 void writeDisplay(){
   if(mode == ENABLE){
-    
+    splash();
   } else if(mode == E_STOPPED){
     //eStopText();
   }
@@ -83,14 +106,14 @@ void setup() {
     if(mode != ENABLE && !state){
       digitalWrite(notifyPin,LOW);
       digitalWrite(relayPin,LOW);
-    } 
+    }
   });
 
   eStop.setup(4,[](int state){
     parser.sendPacket(REPORT, E_STOP, state);
     mode = E_STOPPED;
   });
-    
+
   parser.on(READY, [](unsigned char * input, int size){
     parser.sendPacket(REPORT,READY);
   });
@@ -114,7 +137,7 @@ void setup() {
       digitalWrite(relayPin, LOW);
     }
   });
-  
+
   parser.on(IP_ADDRESS, [](unsigned char * input, int size){
     ipAddress[0] = ((input[2]&0b01111111)<<1) + ((input[3]&0b01000000)>>6);
     ipAddress[1] = '.';
