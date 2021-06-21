@@ -17,6 +17,6 @@ hw.onready = ()=>{
 
   setTimeout(()=>{
     hw.mode = 'enable';
-    hw.sendIpAddress();
+    hw.sendIpAddress('10.120.10.120');
   }, 2000);
 }
