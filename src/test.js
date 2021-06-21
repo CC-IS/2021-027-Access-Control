@@ -3,6 +3,6 @@ const {getDataFromSheet} = require ('./spreadsheetChecker.js');
 const sheet = new getDataFromSheet();
 
 
-sheet.isAdminOn().then((result)=>{
+sheet.isAdminPresent().then((result)=>{
     console.log(result);
 })
