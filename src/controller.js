@@ -11,7 +11,7 @@ var modes = {
   enable: 1,
   admin: 2,
   program: 3,
-  disable: 4,
+  idle: 4,
   wait: 5
 }
 
@@ -75,10 +75,12 @@ class HardwareControl extends EventEmitter{
     var test = '10.10.10.10';
     var nums = test.split('.').map(el=>parseInt(el));
     var addrArr = [];
+    console.log(nums);
+    console.log((nums[1] & 0b11111100) >> 2);
     addrArr[0] = (nums[0] & 0b11111110) >> 1;
-    addrArr[1] = ((nums[0] & 0b00000001) << 6) & ((nums[1] & 0b11111100) >> 2);
-    addrArr[2] = ((nums[1] & 0b00000011) << 5) & ((nums[2] & 0b11111000) >> 3);
-    addrArr[3] = ((nums[2] & 0b00000111) << 4) & ((nums[3] & 0b11110000) >> 4);
+    addrArr[1] = ((nums[0] & 0b00000001) << 6) + ((nums[1] & 0b11111100) >> 2);
+    addrArr[2] = ((nums[1] & 0b00000011) << 5) + ((nums[2] & 0b11111000) >> 3);
+    addrArr[3] = ((nums[2] & 0b00000111) << 4) + ((nums[3] & 0b11110000) >> 4);
     addrArr[4] = ((nums[3] & 0b00001111));
     addrArr.unshift(1, IP_ADDRESS);
 

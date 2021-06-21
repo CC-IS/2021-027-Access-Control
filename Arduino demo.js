@@ -8,6 +8,10 @@ hw.on('switchState', (val)=>{
   console.log(val);
 })
 
+hw.on('eStop', (val)=>{
+  console.log(val);
+})
+
 hw.onready = ()=>{
   hw.mode = 'program';
 
