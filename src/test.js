@@ -4,5 +4,5 @@ const sheet = new getDataFromSheet();
 
 
 sheet.isAdminPresent().then((result)=>{
-    console.log(result);
+    console.log(result.data.values[0]);
 })
