@@ -19,13 +19,13 @@ class read{
         let response = this.mfrc522.findCard();
 
         if (!response.status) {
-        console.log("No Card");
+        // console.log("No Card");
         return false;
         }
         //# Get the UID of the card
         response = this.mfrc522.getUid();
         if (!response.status) {
-        console.log("UID Scan Error");
+        // console.log("UID Scan Error");
         return false;
         }
         //# If we have the UID, continue
