@@ -25,11 +25,13 @@ class HardwareControl extends EventEmitter{
     };
 
     _this.parser.on(E_STOPPED, (data)=> {
+      _this.eStop = data[0];
       _this.emit('eStop');
     });
 
 
     _this.parser.on(SWITCH_STATE, (data)=> {
+      _this.switch = data[0];
       _this.emit('switchState', data[0]);
     });
 
@@ -54,6 +56,8 @@ class HardwareControl extends EventEmitter{
 
     _this.parser.onOpen = ()=> {
       _this.parser.sendPacket([127, READY]);
+      _this.parser.sendPacket([1,SWITCH_STATE]);
+      _this.parser.sendPacket([1,E_STOP]);
     };
 
     _this.onPortNotFound = ()=>{};
