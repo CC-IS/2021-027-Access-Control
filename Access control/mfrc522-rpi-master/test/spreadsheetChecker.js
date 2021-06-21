@@ -19,7 +19,7 @@
         this.googleSheets = google.sheets({ version: "v4", auth: this.client});
 
         this.auth = new google.auth.GoogleAuth({
-            keyFile: "credentials.json",
+            keyFile: "/boot/credentials.json",
             scopes: "https://www.googleapis.com/auth/spreadsheets",
         });
         this.client = this.auth.getClient();
