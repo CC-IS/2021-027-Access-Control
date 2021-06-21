@@ -1,8 +1,10 @@
 const config = require ('/boot/config.json');
+// const config = require('./config.json');
+
 const {getDataFromSheet} = require('./src/spreadsheetChecker');
 const {readClass} = require('./src/read');
 const control = require('./src/controllingMachine');
-const { managedidentities } = require('googleapis/build/src/apis/managedidentities');
+// const { managedidentities } = require('googleapis/build/src/apis/managedidentities');
 // const devName="CCIS-VBS-001";
 const devName = config.device;
 const adminUIDs = config.admins;
