@@ -1,16 +1,10 @@
 const config = require ('/boot/config.json');
-// const config = require('./config.json');
-
 const {getDataFromSheet} = require('./src/spreadsheetChecker');
 const {readClass} = require('./src/read');
 const control = require('./src/controllingMachine');
-
 const {HardwareControl} = require('./src/controller.js');
-// const { managedidentities } = require('googleapis/build/src/apis/managedidentities');
-// const devName="CCIS-VBS-001";
 const devName = config.device;
 const adminUIDs = config.admins;
-// let adminUIDs =["c66759a5"];
 
 var hw = new HardwareControl({
   manufacturer: 'Silicon Labs'
@@ -21,44 +15,58 @@ let devNum;
 const rfid = new readClass();
 let progmode = false;
 let loop;
+
+const ControllerInstance = new controller();
+
 sheet.onReady = ()=>{
-  loop =async  function (result){
+    loop =async  function (result){
+    sheet.getDevNum(devName).then ((value)=>{devNum = value});
 
     setInterval( ( async function() {
-      sheet.getDevNum(devName).then ((value)=>{devNum = value});
-
       let UID = rfid.readCards();
+      //mode 1, no UID
       if (!UID){
         console.log("Insert Card");
         return;
       }
       console.log(UID);
-      if (adminUIDs.includes(UID) && hw.switch){
-        hw.mode = 'program';
+      //mode 2, admin needs to include and switch is on 
+      if (adminUIDs.includes(UID) && hw.switch == 1){
+        controller.mode = 'program';
         progmode = true;
         console.log('Entered Programming Mode.. please input user card after 3 seconds');
         console.log ('Note: Programming mode will end in 30 seconds from now.');
         setTimeout(()=>{ progMode = false;}, 30000);
-      } else if(progmode && !adminUIDs.includes(UID)){
+      } 
+      // case 3 adding a user
+      else if(progmode && !adminUIDs.includes(UID)){
         await addUser(UID);
       }
+      // case 4 check access needs to include an if statement for admin 
       else{
       let access;
       await sheet.hasAccess(UID,devNum).then((result)=>{
         access = result;
       })
+      let isAdminPresent;
+      await sheet.isAdminPresent().then((result)=>{
+        isAdminPresent =  result.data.values[0][0];
+      })
 
-      //console.log("access " + sheet.hasAccess(UID,devNum));
-      // console.log(access);
-      if (sheet.isUser(UID) && access){
-        hw.mode = 'enable';
+      if ((sheet.isUser(UID) && access && isAdminPresent == 1)){
+        controller.mode = 'enable';
         //control.runMachine();
-      } else if (sheet.isUser(UID) && !access){
-        hw.mode = 'idle';
-        //control.stopMachine();
+      }
+      else if (sheet.isUser(UID) && access){
+        controller.mode = 'idle';
+        console.log("Please ask admin to be present");
+      }
+
+       else if (sheet.isUser(UID) && !access){
+        controller.mode = 'idle';
       } else {
         console.log("User doesn't exist.");
-        hw.mode = 'idle
+        hw.mode = 'idle'
         return;
       }
       }
