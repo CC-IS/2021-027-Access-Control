@@ -13,12 +13,12 @@
     onReady(){
 
     }
-    async isAdminOn(){
-        return await this.googleSheets.spreadsheets.values.get({
+    async isAdminPresent(){
+        return await (this.googleSheets.spreadsheets.values.get({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
             range: 'Authorizations!B2:B2'
-        })
+        })).data.values[0];
     }
 
     authorize (){
