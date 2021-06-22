@@ -18,7 +18,7 @@ let loop;
 
 sheet.onReady = ()=>{
     loop =async  function (result){
-      hw.mode = 'program';
+      hw.mode = 'enable';
     sheet.getDevNum(devName).then ((value)=>{devNum = value});
 
     setInterval( ( async function() {
