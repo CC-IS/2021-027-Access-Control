@@ -18,6 +18,7 @@ let loop;
 
 sheet.onReady = ()=>{
     loop =async  function (result){
+      hw.mode = 'idle';
     sheet.getDevNum(devName).then ((value)=>{devNum = value});
 
     setInterval( ( async function() {
