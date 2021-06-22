@@ -34,10 +34,12 @@ sheet.onReady = ()=>{
       if (sheet.isAdmin(UID) /*&& hw.switch == 1*/){
         hw.mode = 'program';
         progmode = true;
+        console.log(sheet.isAdmin(UID));
         console.log('Entered Programming Mode.. please input user card after 3 seconds');
         console.log ('Note: Programming mode will end in 30 seconds from now.');
         setTimeout(()=>{ progMode = false;}, 30000);
       } 
+
       // case 3 adding a user
       else if(progmode && !sheet.isAdmin(UID)){
         await addUser(UID);
