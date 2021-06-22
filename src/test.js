@@ -10,7 +10,7 @@ const sheet = new getDataFromSheet();
 
 
 sheet.onReady = (()=>{
-    sheet.isAdmin("ff83aa29").then((result)=>{
+    sheet.isAdmin("c66759a5").then((result)=>{
 
         console.log(result);
     })
