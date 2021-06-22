@@ -8,10 +8,9 @@
             this.users = result.data.values;
             this.onReady();
         })
+
     }
-
     onReady(){
-
     }
     async isAdminPresent(){
         return await (this.googleSheets.spreadsheets.values.get({
@@ -20,13 +19,12 @@
             range: 'Authorizations!B2:B2'
         }));
     }
-
     authorize (){
         const { google } = require("googleapis");
         this.googleSheets = google.sheets({ version: "v4", auth: this.client});
 
         this.auth = new google.auth.GoogleAuth({
-            keyFile: "/boot/credentials.json",
+            keyFile: "C:/Users/phyys/Desktop/Credentials.json",
             scopes: "https://www.googleapis.com/auth/spreadsheets",
         });
         this.client = this.auth.getClient();
@@ -41,9 +39,7 @@
                 values:[[2]],
             }
             }) 
-        }
-    
-
+    }
     async getBatch() {
         return await this.googleSheets.spreadsheets.values.batchGet({
             auth: this.auth,
@@ -51,7 +47,6 @@
             ranges:['Authorizations']
             })    
     }
-        
     async getUsers (){
         return await this.googleSheets.spreadsheets.values.get({
             auth: this.auth,
@@ -59,7 +54,6 @@
             range: 'Authorizations!A2:A'
         })
     } 
-     
     async getRow(row) {
         return await this.googleSheets.spreadsheets.values.get({
             auth: this.auth,
@@ -77,9 +71,7 @@
                 values:[[value]],
             }
             }) 
-        }
-    
-
+    }
     async addUser(UID,col,devName){
         if (this.isUser(UID)){
             this.changeCell(`${String.fromCharCode(65 + col)}${this.getIndex(UID)+2}`,1);
@@ -102,7 +94,7 @@
               values: [[UID, 0,0,0,0,0,0]],
             },
     })
-}
+    }
     isUser(UID){
         // var _this = this;
         return JSON.stringify(this.users).includes(UID);
@@ -120,21 +112,6 @@
           })
           return index2;
     }
-    /*
-    foundUser(values, UID){
-        let found = [false,0];
-        // console.log(values, UID);
-        console.log("Values of users are: ");
-        // console.log(this.users);
-        values.forEach((Element,index) => {
-          if (Element[0] && Element[0].includes(UID)){
-            found[0] = true;
-            found[1] = index;
-          }
-        });
-          return found;
-      }
-      */
     async getDevNum(name){
         let returnedValue = 0;
         await this.getRow(-1).then((rowData)=>{    
@@ -145,8 +122,6 @@
     async hasAccess(UID,devNum){
         let found;
         await this.getRow(this.getIndex(UID)).then((result)=>{
-            // console.log("cell");
-            // console.log(result.data.values);
             if ((result.data.values[0][devNum]) ==1 ){
                 found =  true;
             } else {
@@ -154,7 +129,18 @@
             }
     })   
     return found;
-}
+    }
+    async isAdmin(UID){
+        let found;
+        await this.getRow(this.getIndex(UID)).then((result)=>{
+            if ((result.data.values[0][1]) ==1 ){
+                found =  true;
+            } else {
+                found = false;
+            }
+    })   
+    return found;
+    }
         
   }
 exports.getDataFromSheet = getDataFromSheet ;

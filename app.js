@@ -3,8 +3,8 @@ const {getDataFromSheet} = require('./src/spreadsheetChecker');
 const {readClass} = require('./src/read');
 const control = require('./src/controllingMachine');
 const {HardwareControl} = require('./src/controller.js');
+const { admin } = require('googleapis/build/src/apis/admin');
 const devName = config.device;
-const adminUIDs = config.admins;
 
 var hw = new HardwareControl({
   manufacturer: 'Silicon Labs'
@@ -31,7 +31,7 @@ sheet.onReady = ()=>{
       }
       console.log(UID);
       //mode 2, admin needs to include and switch is on 
-      if (adminUIDs.includes(UID) && hw.switch == 1){
+      if (sheet.isAdmin(UID) && hw.switch == 1){
         controller.mode = 'program';
         progmode = true;
         console.log('Entered Programming Mode.. please input user card after 3 seconds');
@@ -39,7 +39,7 @@ sheet.onReady = ()=>{
         setTimeout(()=>{ progMode = false;}, 30000);
       } 
       // case 3 adding a user
-      else if(progmode && !adminUIDs.includes(UID)){
+      else if(progmode && !sheet.isAdmin(UID)){
         await addUser(UID);
       }
       // case 4 check access needs to include an if statement for admin 
