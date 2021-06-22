@@ -52,16 +52,16 @@ sheet.onReady = ()=>{
       })
 
       if ((sheet.isUser(UID) && access && isAdminPresent == 1)){
-        controller.mode = 'enable';
+        hw.mode = 'enable';
         //control.runMachine();
       }
       else if (sheet.isUser(UID) && access){
-        controller.mode = 'idle';
+        hw.mode = 'idle';
         console.log("Please ask admin to be present");
       }
 
        else if (sheet.isUser(UID) && !access){
-        controller.mode = 'idle';
+        hw.mode = 'idle';
       } else {
         console.log("User doesn't exist.");
         hw.mode = 'idle'
