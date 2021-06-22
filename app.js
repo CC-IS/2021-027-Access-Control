@@ -30,7 +30,7 @@ sheet.onReady = ()=>{
       console.log(UID);
       //mode 2, admin needs to include and switch is on 
       if (sheet.isAdmin(UID) && hw.switch == 1){
-        controller.mode = 'program';
+        hw.mode = 'program';
         progmode = true;
         console.log('Entered Programming Mode.. please input user card after 3 seconds');
         console.log ('Note: Programming mode will end in 30 seconds from now.');
