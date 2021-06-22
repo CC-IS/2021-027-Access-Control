@@ -9,7 +9,10 @@ const sheet = new getDataFromSheet();
 // console.log(ControllerInstance.get.mode());
 
 
+sheet.onReady = (()=>{
+    sheet.isAdmin("23").then((result)=>{
 
-sheet.getRow(1).then((result)=>{
-    console.log(result.data.values);
-})
+        console.log(result);
+    })
+}
+) 
