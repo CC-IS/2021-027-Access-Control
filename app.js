@@ -27,9 +27,11 @@ sheet.onReady = ()=>{
         console.log("Insert Card");
         return;
       }
+      
       console.log(UID);
+
       //mode 2, admin needs to include and switch is on 
-      if (sheet.isAdmin(UID) && hw.switch == 1){
+      if (sheet.isAdmin(UID) /*&& hw.switch == 1*/){
         hw.mode = 'program';
         progmode = true;
         console.log('Entered Programming Mode.. please input user card after 3 seconds');
