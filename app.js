@@ -16,8 +16,6 @@ const rfid = new readClass();
 let progmode = false;
 let loop;
 
-const ControllerInstance = new controller();
-
 sheet.onReady = ()=>{
     loop =async  function (result){
     sheet.getDevNum(devName).then ((value)=>{devNum = value});
