@@ -27,11 +27,13 @@ sheet.onReady = ()=>{
         console.log("Insert Card");
         return;
       }
-      
+      let isAdmin;
       console.log(UID);
-
+      await sheet.isAdmin(UID).then((result)=>{
+        isAdmin = result;
+      })
       //mode 2, admin needs to include and switch is on 
-      if (sheet.isAdmin(UID) /*&& hw.switch == 1*/){
+      if (isAdmin /*&& hw.switch == 1*/){
         hw.mode = 'program';
         progmode = true;
         console.log(sheet.isAdmin(UID));
@@ -41,7 +43,7 @@ sheet.onReady = ()=>{
       } 
 
       // case 3 adding a user
-      else if(progmode && !sheet.isAdmin(UID)){
+      else if(progmode && !isAdmin){
         await addUser(UID);
       }
       // case 4 check access needs to include an if statement for admin 
