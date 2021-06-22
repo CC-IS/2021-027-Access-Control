@@ -74,7 +74,7 @@ sheet.onReady = ()=>{
         return;
       }
       }
-    }),2000)
+    }),5000)
   }
   loop();
 }
