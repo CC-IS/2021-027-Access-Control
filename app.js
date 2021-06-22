@@ -1,7 +1,7 @@
 const config = require ('/boot/config.json');
 const {getDataFromSheet} = require('./src/spreadsheetChecker');
 const {readClass} = require('./src/read');
-// const control = require('./src/controllingMachine');
+const control = require('./src/controllingMachine');
 const {HardwareControl} = require('./src/controller.js');
 const { admin } = require('googleapis/build/src/apis/admin');
 const devName = config.device;
@@ -74,7 +74,7 @@ sheet.onReady = ()=>{
         return;
       }
       }
-    }),5000)
+    }),2000)
   }
   loop();
 }
