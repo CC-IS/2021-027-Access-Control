@@ -85,6 +85,7 @@ void splash(){
 }
 
 void writeDisplay(){
+  splash();
   if(mode == ENABLE){
     splash();
   } else if(mode == E_STOPPED){
