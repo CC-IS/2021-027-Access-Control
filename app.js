@@ -63,6 +63,7 @@ sheet.onReady = ()=>{
         //control.runMachine();
       }
       else if (sheet.isUser(UID) && access){
+        console.log("Please ask admin to be present");
         hw.mode = 'idle';
         console.log("Please ask admin to be present");
       }
