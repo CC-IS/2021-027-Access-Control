@@ -24,7 +24,8 @@
         this.googleSheets = google.sheets({ version: "v4", auth: this.client});
 
         this.auth = new google.auth.GoogleAuth({
-            keyFile: "C:/Users/phyys/Desktop/Credentials.json",
+            // keyFile: "C:/Users/phyys/Desktop/Credentials.json",
+            keyFile: "/boot/Credentials.json"
             scopes: "https://www.googleapis.com/auth/spreadsheets",
         });
         this.client = this.auth.getClient();
