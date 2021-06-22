@@ -28,7 +28,7 @@ enum commands {
 //const int READY = 1;
 //const int SWITCH_STATE = 2;
 //const int PROGRAMMING_MODE = 3;
-//const int AUTHENTICATED = 4;
+// const int AUTHENTICATED = 4;
 //const int E_STOP = 4;
 
 enum modes{
