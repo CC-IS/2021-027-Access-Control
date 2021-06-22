@@ -156,13 +156,13 @@ void setup() {
 
   parser.sendPacket(REPORT,READY);
 
-//  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x32
-//    Serial.println(F("SSD1306 allocation failed"));
-//    for(;;); // Don't proceed, loop forever
-//  }
-//  display.ssd1306_command(0x22); // Set page start and end addresses
-//  display.ssd1306_command(0x00); // start at zero
-//  display.ssd1306_command(0x07); // end at seven.
+ if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x32
+   Serial.println(F("SSD1306 allocation failed"));
+   for(;;); // Don't proceed, loop forever
+ }
+ display.ssd1306_command(0x22); // Set page start and end addresses
+ display.ssd1306_command(0x00); // start at zero
+ display.ssd1306_command(0x07); // end at seven.
 }
 
 
