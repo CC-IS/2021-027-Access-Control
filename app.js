@@ -30,13 +30,12 @@ sheet.onReady = ()=>{
     setInterval( ( async function() {
       let UID = rfid.readCards();
       //mode 1, no UID
-      if (!UID && lastSeen){
+      if (!UID){
         lastSeen = null;
         console.log("Insert Card");
         hw.mode = 'idle';
         return;
-      } else if(UID != lastSeen && UID){
-        console.log()
+      } else if(UID != lastSeen){
         lastSeen = UID;
         let isAdmin;
         console.log(UID);
@@ -79,7 +78,6 @@ sheet.onReady = ()=>{
           }
         }
       }
-
      }), 500);
   // }
   // loop();
