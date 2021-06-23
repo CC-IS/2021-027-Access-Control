@@ -30,12 +30,21 @@ sheet.onReady = ()=>{
     setInterval( ( async function() {
       let UID = rfid.readCards();
       //mode 1, no UID
+<<<<<<< HEAD
       if (!UID && lastSeen){
         lastSeen = null;
+=======
+      if (!UID){
+        if (progmode){
+          console.log('waiting for user');
+          return;
+        }
+>>>>>>> 19cd54becfd55398021842ef353ab96285e1807d
         console.log("Insert Card");
         hw.mode = 'idle';
         return;
       }
+<<<<<<< HEAD
       if(UID != lastSeen){
         lastSeen = UID;
         let isAdmin;
@@ -62,6 +71,22 @@ sheet.onReady = ()=>{
           await sheet.isAdminPresent().then((result)=>{
             isAdminPresent =  result.data.values[0][0];
           })
+=======
+      let isAdmin;
+      console.log(UID);
+      await sheet.isAdmin(UID).then((result)=>{
+        isAdmin = result;
+      })
+      //mode 2, admin needs to include and switch is on
+      if (isAdmin /*&& hw.switch == 1*/){
+        hw.mode = 'program';
+        progmode = true;
+        console.log(sheet.isAdmin(UID));
+        console.log('Entered Programming Mode.. please input user card after 3 seconds');
+        console.log ('Note: Programming mode will end in 30 seconds from now.');
+        setTimeout(()=>{ progmode = false; hw.mode = 'idle';}, 30000);
+      }
+>>>>>>> 19cd54becfd55398021842ef353ab96285e1807d
 
           if ((sheet.isUser(UID) && access && isAdminPresent == 1)){
             hw.mode = 'enable';
