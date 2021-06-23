@@ -16,6 +16,10 @@ const rfid = new readClass();
 let progmode = false;
 let loop;
 
+hw.on('mode', (reportedMode)=>{
+  console.log(reportedMode);
+})
+
 sheet.onReady = ()=>{
     loop =async  function (result){
       hw.mode = 'enable';
@@ -33,7 +37,7 @@ sheet.onReady = ()=>{
       await sheet.isAdmin(UID).then((result)=>{
         isAdmin = result;
       })
-      //mode 2, admin needs to include and switch is on 
+      //mode 2, admin needs to include and switch is on
       if (isAdmin /*&& hw.switch == 1*/){
         hw.mode = 'program';
         progmode = true;
@@ -41,13 +45,13 @@ sheet.onReady = ()=>{
         console.log('Entered Programming Mode.. please input user card after 3 seconds');
         console.log ('Note: Programming mode will end in 30 seconds from now.');
         setTimeout(()=>{ progMode = false;}, 30000);
-      } 
+      }
 
       // case 3 adding a user
       else if(progmode && !isAdmin){
         await addUser(UID);
       }
-      // case 4 check access needs to include an if statement for admin 
+      // case 4 check access needs to include an if statement for admin
       else{
       let access;
       await sheet.hasAccess(UID,devNum).then((result)=>{

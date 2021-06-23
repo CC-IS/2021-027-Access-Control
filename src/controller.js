@@ -29,6 +29,10 @@ class HardwareControl extends EventEmitter{
       _this.emit('eStop');
     });
 
+    _this.parser.on(MODE, (data)=> {
+      _this.emit('mode', data[0]);
+    });
+
 
     _this.parser.on(SWITCH_STATE, (data)=> {
       _this.switch = data[0];
@@ -93,7 +97,7 @@ class HardwareControl extends EventEmitter{
     var _this = this;
     _this._mode = modeName;
     console.log('mode is ' + modeName + ' ' + modes[modeName]);
-    _this.parser.sendPacket([1, MODE, modes[modeName]]);
+    if(_this.ready) _this.parser.sendPacket([1, MODE, modes[modeName]]);
   }
 
   get mode(){
