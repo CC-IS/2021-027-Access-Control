@@ -31,11 +31,11 @@ sheet.onReady = ()=>{
       let UID = rfid.readCards();
       //mode 1, no UID
       if (!UID){
-        if(UID != lastSeen) {
+        if(UID != lastSeen && !progmode) {
+          lastSeen = UID;
           console.log("Insert Card");
           hw.mode = 'idle';
         }
-        lastSeen = UID;
         return;
       } else if(UID != lastSeen){
         lastSeen = UID;
@@ -48,10 +48,9 @@ sheet.onReady = ()=>{
         if (isAdmin /*&& hw.switch == 1*/){
           hw.mode = 'program';
           progmode = true;
-          console.log(sheet.isAdmin(UID));
           console.log('Entered Programming Mode.. please input user card after 3 seconds');
           console.log ('Note: Programming mode will end in 30 seconds from now.');
-          setTimeout(()=>{ progMode = false;}, 30000);
+          setTimeout(()=>{ progmode = false;}, 30000);
         } else if(progmode && !isAdmin){   // case 3 adding a user
           await addUser(UID);
         } else{ // case 4 check access needs to include an if statement for admin
