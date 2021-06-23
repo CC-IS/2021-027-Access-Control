@@ -23,7 +23,7 @@ hw.on('mode', (reportedMode)=>{
 let lastSeen = null;
 
 sheet.onReady = ()=>{
-    loop =async  function (result){
+    // loop =async  function (result){
       hw.mode = 'enable';
     sheet.getDevNum(devName).then ((value)=>{devNum = value});
 
@@ -51,7 +51,7 @@ sheet.onReady = ()=>{
           console.log('Entered Programming Mode.. please input user card after 3 seconds');
           console.log ('Note: Programming mode will end in 30 seconds from now.');
           setTimeout(()=>{ progMode = false;}, 30000);
-        } else if(hw.mode == 'program' && !isAdmin){   // case 3 adding a user
+        } else if(progmode && !isAdmin){   // case 3 adding a user
           await addUser(UID);
         } else{ // case 4 check access needs to include an if statement for admin
           let access;
@@ -80,9 +80,9 @@ sheet.onReady = ()=>{
         }
       }
 
-    }), 500);
-  }
-  loop();
+     }), 500);
+  // }
+  // loop();
 }
 async function addUser(UID){
   console.log("Initiating add user");
