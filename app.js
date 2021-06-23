@@ -30,6 +30,7 @@ sheet.onReady = ()=>{
       //mode 1, no UID
       if (!UID){
         console.log("Insert Card");
+        hw.mode = 'idle';
         return;
       }
       let isAdmin;

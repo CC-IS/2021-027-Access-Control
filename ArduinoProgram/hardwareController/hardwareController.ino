@@ -32,7 +32,7 @@ enum commands {
 //const int E_STOP = 4;
 
 enum modes{
-  ENABLE,
+  ENABLE = 1,
   IDLE,
   ADMIN,
   PROG,
