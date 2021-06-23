@@ -22,6 +22,7 @@ exports.serialParser = function () {
   };
 
   _this.sendPacket = (arr, print)=> {
+    console.log("sending packet");
     arr[0] |= 0b10000000;
     arr.push(arr.reduce((acc, val)=>acc + val, 0) & 0b01111111);
     arr.push(START_FLAG + STOP_FLAG);
