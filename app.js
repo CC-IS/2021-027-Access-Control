@@ -74,7 +74,7 @@ sheet.onReady = ()=>{
       }
 
        else if (sheet.isUser(UID) && !access){
-        hw.mode = 'idle';
+        hw.mode = 'noPerms';
       } else {
         console.log("User doesn't exist.");
         hw.mode = 'idle'
