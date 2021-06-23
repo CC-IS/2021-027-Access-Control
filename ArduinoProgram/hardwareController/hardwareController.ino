@@ -28,7 +28,7 @@ enum commands {
 //const int READY = 1;
 //const int SWITCH_STATE = 2;
 //const int PROGRAMMING_MODE = 3;
-//const int AUTHENTICATED = 4;
+// const int AUTHENTICATED = 4;
 //const int E_STOP = 4;
 
 enum modes{
@@ -165,7 +165,7 @@ void setup() {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;); // Don't proceed, loop forever
   }
-  
+
   display.ssd1306_command(0x22); // Set page start and end addresses
   display.ssd1306_command(0x00); // start at zero
   display.ssd1306_command(0x07); // end at seven.

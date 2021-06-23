@@ -5,11 +5,11 @@ var hw = new HardwareControl({
 });
 
 hw.on('switchState', (val)=>{
-  console.log(val);
+  console.log("switch state" + val);
 })
 
 hw.on('eStop', (val)=>{
-  console.log(val);
+  console.log("estop state" +val);
 })
 
 hw.onready = ()=>{
