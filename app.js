@@ -32,6 +32,7 @@ sheet.onReady = ()=>{
       //mode 1, no UID
       console.log(UID + ' is the card');
       if (!UID){
+        console.log('no card');
         if(UID != lastSeen) {
           console.log("Insert Card");
           hw.mode = 'idle';
@@ -81,7 +82,7 @@ sheet.onReady = ()=>{
           }
         }
       }
-     }), 500);
+    }), 2000);
   // }
   // loop();
 }
