@@ -35,8 +35,8 @@ sheet.onReady = ()=>{
         console.log("Insert Card");
         hw.mode = 'idle';
         return;
-      }
-      if(UID != lastSeen){
+      } else if(UID != lastSeen){
+        console.log()
         lastSeen = UID;
         let isAdmin;
         console.log(UID);
