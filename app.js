@@ -29,7 +29,7 @@ sheet.onReady = ()=>{
       let UID = rfid.readCards();
       //mode 1, no UID
       if (!UID){
-        if (hw.mode = 'program'){
+        if (progmode){
           console.log('waiting for user');
           return;
         }
