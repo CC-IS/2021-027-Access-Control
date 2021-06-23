@@ -22,7 +22,7 @@ hw.on('mode', (reportedMode)=>{
 
 sheet.onReady = ()=>{
     loop =async  function (result){
-      hw.mode = 'enable';
+      // hw.mode = 'enable';
     sheet.getDevNum(devName).then ((value)=>{devNum = value});
 
     setInterval( ( async function() {
