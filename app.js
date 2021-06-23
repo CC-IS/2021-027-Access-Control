@@ -31,7 +31,7 @@ sheet.onReady = ()=>{
       let UID = rfid.readCards();
       //mode 1, no UID
       if (!UID){
-        if(UID == lastSeen) {
+        if(UID != lastSeen) {
           console.log("Insert Card");
           hw.mode = 'idle';
         }
