@@ -17,14 +17,14 @@ public:
   void (*endCB)(unsigned char  *, int);
   void (*errCB)(unsigned char  *, int);
   void (*wrongAddrCB)(unsigned char  *, int);
-  void (* commandCBs [128])(unsigned char  *, int);
+  void (* commandCBs [16])(unsigned char  *, int);
   Stream * serial;
 
   serialParser(Stream &port){
-    length = 128;
+    length = 32;
     address = -1;
     input = new unsigned char[length];
-    for(int i=0; i < 128; i++){
+    for(int i=0; i < 16; i++){
       commandCBs[i] = NULL;
     }
     pntr = 0;

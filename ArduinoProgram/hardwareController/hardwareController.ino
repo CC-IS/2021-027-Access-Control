@@ -33,12 +33,13 @@ enum commands {
 
 enum modes{
   ENABLE,
+  IDLE,
   ADMIN,
   PROG,
-  DISABLE,
+  NO_PERMS,
   WAIT,
   E_STOPPED
-} mode = DISABLE;
+} mode = IDLE;
 
 Button powSwitch;
 Button eStop;
@@ -50,15 +51,25 @@ char ipAddress[7];
 int notifyPin = 13;
 int relayPin = 9;
 
-void eStopText(){
+void boldText(){
  display.clearDisplay();
  display.setTextSize(2); // Normal 1:1 pixel scale
  display.setTextColor(SSD1306_WHITE); // Draw white text
  display.cp437(true); // Use full 256 char 'Code Page 437' font
  display.setCursor(0,7); // Start at top-left corner
- display.println(F("Emergency"));
- display.println(F("Stop"));
- display.println(F("Engaged"));
+ if(mode == E_STOPPED) {
+  display.println(F("Emergency"));
+  display.println(F("Stop"));
+  display.println(F("Engaged"));
+ } else if(mode == NO_PERMS){
+  display.println(F("Card"));
+  display.println(F("Not"));
+  display.println(F("Authorized"));
+ } else if(mode == PROG){
+  display.println(F("Add User:"));
+  display.println(F("Tap card"));
+  display.println(F("now."));
+ }
  display.display();
 }
 
@@ -74,22 +85,18 @@ void splash(){
   display.setTextColor(SSD1306_WHITE); // Draw white text
   display.cp437(true); // Use full 256 char 'Code Page 437' font
   if(mode == ENABLE){
-    display.setCursor(15,52); // Start at top-left corner
+    display.setCursor(20,52); // Start at top-left corner
     display.println(F("System Enabled"));
-  }
-  else if(mode == PROG){
-    display.setCursor(22,52); // Start at top-left corner
-    display.println(F("Tap New RFID."));
+  } else if(mode == IDLE){
+    display.setCursor(30,52); // Start at top-left corner
+    display.println(F("Insert card"));
   }
   display.display();
 }
 
 void writeDisplay(){
-  if(mode == ENABLE){
-    splash();
-  } else if(mode == E_STOPPED){
-    //eStopText();
-  }
+  if(mode == IDLE || mode == ENABLE) splash();
+  else boldText();
 }
 
 void setup() {
@@ -132,7 +139,7 @@ void setup() {
     if(mode == ENABLE){
       digitalWrite(notifyPin,HIGH);
       digitalWrite(relayPin,HIGH);
-    } else if(mode == DISABLE && !powSwitch.state){
+    } else if(mode == IDLE && !powSwitch.state){
       digitalWrite(notifyPin, LOW);
       digitalWrite(relayPin, LOW);
     }
@@ -154,15 +161,17 @@ void setup() {
     parser.endMessage();
   });
 
-  parser.sendPacket(REPORT,READY);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x32
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); // Don't proceed, loop forever
+  }
+  
+  display.ssd1306_command(0x22); // Set page start and end addresses
+  display.ssd1306_command(0x00); // start at zero
+  display.ssd1306_command(0x07); // end at seven.
 
-//  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x32
-//    Serial.println(F("SSD1306 allocation failed"));
-//    for(;;); // Don't proceed, loop forever
-//  }
-//  display.ssd1306_command(0x22); // Set page start and end addresses
-//  display.ssd1306_command(0x00); // start at zero
-//  display.ssd1306_command(0x07); // end at seven.
+  writeDisplay();
+  parser.sendPacket(REPORT,READY);
 }
 
 
