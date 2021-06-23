@@ -9,10 +9,10 @@ const E_STOPPED = 5;
 
 var modes = {
   enable: 1,
-  admin: 2,
+  idle: 2,
   program: 3,
-  idle: 4,
-  wait: 5
+  wait: 4,
+  noPerms: 5
 }
 
 class HardwareControl extends EventEmitter{

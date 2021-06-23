@@ -34,10 +34,9 @@ enum commands {
 enum modes{
   ENABLE = 1,
   IDLE,
-  ADMIN,
   PROG,
-  NO_PERMS,
   WAIT,
+  NO_PERMS,
   E_STOPPED
 } mode = IDLE;
 
