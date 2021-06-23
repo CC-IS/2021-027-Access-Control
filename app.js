@@ -20,6 +20,8 @@ hw.on('mode', (reportedMode)=>{
   console.log(reportedMode);
 })
 
+let lastSeen = null;
+
 sheet.onReady = ()=>{
     loop =async  function (result){
       hw.mode = 'enable';
@@ -28,60 +30,57 @@ sheet.onReady = ()=>{
     setInterval( ( async function() {
       let UID = rfid.readCards();
       //mode 1, no UID
-      if (!UID){
+      if (!UID && lastSeen){
+        lastSeen = null;
         console.log("Insert Card");
         hw.mode = 'idle';
         return;
       }
-      let isAdmin;
-      console.log(UID);
-      await sheet.isAdmin(UID).then((result)=>{
-        isAdmin = result;
-      })
-      //mode 2, admin needs to include and switch is on
-      if (isAdmin /*&& hw.switch == 1*/){
-        hw.mode = 'program';
-        progmode = true;
-        console.log(sheet.isAdmin(UID));
-        console.log('Entered Programming Mode.. please input user card after 3 seconds');
-        console.log ('Note: Programming mode will end in 30 seconds from now.');
-        setTimeout(()=>{ progMode = false;}, 30000);
+      if(UID != lastSeen){
+        lastSeen = UID;
+        let isAdmin;
+        console.log(UID);
+        await sheet.isAdmin(UID).then((result)=>{
+          isAdmin = result;
+        })
+        //mode 2, admin needs to include and switch is on
+        if (isAdmin /*&& hw.switch == 1*/){
+          hw.mode = 'program';
+          progmode = true;
+          console.log(sheet.isAdmin(UID));
+          console.log('Entered Programming Mode.. please input user card after 3 seconds');
+          console.log ('Note: Programming mode will end in 30 seconds from now.');
+          setTimeout(()=>{ progMode = false;}, 30000);
+        } else if(hw.mode == 'program' && !isAdmin){   // case 3 adding a user
+          await addUser(UID);
+        } else{ // case 4 check access needs to include an if statement for admin
+          let access;
+          await sheet.hasAccess(UID,devNum).then((result)=>{
+            access = result;
+          })
+          let isAdminPresent;
+          await sheet.isAdminPresent().then((result)=>{
+            isAdminPresent =  result.data.values[0][0];
+          })
+
+          if ((sheet.isUser(UID) && access && isAdminPresent == 1)){
+            hw.mode = 'enable';
+            //control.runMachine();
+          } else if (sheet.isUser(UID) && access){
+            console.log("Please ask admin to be present");
+            hw.mode = 'idle';
+            console.log("Please ask admin to be present");
+          } else if (sheet.isUser(UID) && !access){
+            hw.mode = 'noPerms';
+          } else {
+            console.log("User doesn't exist.");
+            hw.mode = 'idle'
+            return;
+          }
+        }
       }
 
-      // case 3 adding a user
-      else if(progmode && !isAdmin){
-        await addUser(UID);
-      }
-      // case 4 check access needs to include an if statement for admin
-      else{
-      let access;
-      await sheet.hasAccess(UID,devNum).then((result)=>{
-        access = result;
-      })
-      let isAdminPresent;
-      await sheet.isAdminPresent().then((result)=>{
-        isAdminPresent =  result.data.values[0][0];
-      })
-
-      if ((sheet.isUser(UID) && access && isAdminPresent == 1)){
-        hw.mode = 'enable';
-        //control.runMachine();
-      }
-      else if (sheet.isUser(UID) && access){
-        console.log("Please ask admin to be present");
-        hw.mode = 'idle';
-        console.log("Please ask admin to be present");
-      }
-
-       else if (sheet.isUser(UID) && !access){
-        hw.mode = 'noPerms';
-      } else {
-        console.log("User doesn't exist.");
-        hw.mode = 'idle'
-        return;
-      }
-      }
-    }),5000)
+    }), 500);
   }
   loop();
 }
