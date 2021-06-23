@@ -49,7 +49,7 @@ sheet.onReady = ()=>{
         console.log(sheet.isAdmin(UID));
         console.log('Entered Programming Mode.. please input user card after 3 seconds');
         console.log ('Note: Programming mode will end in 30 seconds from now.');
-        setTimeout(()=>{ progMode = false;}, 30000);
+        setTimeout(()=>{ progmode = false; hw.mode = 'idle';}, 30000);
       }
 
       // case 3 adding a user
