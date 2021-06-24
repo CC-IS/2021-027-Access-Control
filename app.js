@@ -6,15 +6,18 @@ const {HardwareControl} = require('./src/controller.js');
 const { admin } = require('googleapis/build/src/apis/admin');
 const devName = config.device;
 
+const {Users} = require('./users');
+let users = new Users();
 var hw = new HardwareControl({
   manufacturer: 'Arduino LLC'
 });
-
 const sheet = new getDataFromSheet();
 let devNum;
 const rfid = new readClass();
 let progmode = false;
 let loop;
+const {Users} = require('./users');
+let users = new Users();
 
 hw.on('mode', (reportedMode)=>{
   console.log(reportedMode);
@@ -23,8 +26,9 @@ hw.on('mode', (reportedMode)=>{
 hw.on('switchState', state=>{
   console.log(state + ' is the switch state');
 })
-
 let lastSeen = null;
+
+
 
 sheet.onReady = ()=>{
     
@@ -35,6 +39,10 @@ sheet.onReady = ()=>{
       // if (hw.eStop ==1){
       //   return;
       // }
+
+    
+    users.update().then (()=>{
+
       let UID = rfid.readCards();
       //mode 1, no UID
       if (!UID){
@@ -49,6 +57,7 @@ sheet.onReady = ()=>{
         let isAdmin;
         console.log(UID);
         await sheet.isAdmin(UID).then((result)=>{
+          console.log(result + users[UID][admin]);
           isAdmin = result;
         })
         //mode 2, admin needs to include and switch is on
@@ -85,6 +94,8 @@ sheet.onReady = ()=>{
           }
         }
       }
+
+    })
     }), 1000);
   // }
   // loop();
