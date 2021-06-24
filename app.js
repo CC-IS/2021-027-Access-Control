@@ -23,6 +23,10 @@ hw.on('mode', (reportedMode)=>{
   console.log(reportedMode);
 })
 
+hw.on('switchState', state=>{
+  console.log(state + ' is the switch state');
+})
+
 let lastSeen = null;
 
 sheet.onReady = ()=>{
