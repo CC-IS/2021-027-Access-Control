@@ -15,3 +15,15 @@
 //     })
 //
 // ) 
+
+const {Users} = require('./users');
+let users = new Users();
+users.update().then (()=>{
+
+    console.log(users.length);
+
+})
+users.onReady =(()=>{
+    
+})
+
