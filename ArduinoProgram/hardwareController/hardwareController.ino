@@ -107,7 +107,7 @@ void setup() {
   pinMode(notifyPin, OUTPUT);
   pinMode(relayPin, OUTPUT);
 
-  powSwitch.setup(3,[](int state){
+  powSwitch.setup(4,[](int state){
     parser.sendPacket(REPORT, SWITCH_STATE, state);
     if(mode != ENABLE && !state){
       digitalWrite(notifyPin,LOW);
@@ -115,7 +115,7 @@ void setup() {
     }
   });
 
-  eStop.setup(4,[](int state){
+  eStop.setup(5,[](int state){
     parser.sendPacket(REPORT, E_STOP, state);
     mode = E_STOPPED;
   });
