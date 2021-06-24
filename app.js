@@ -1,6 +1,3 @@
-//[alias]
-//	acp = "!f() { git add -A && git commit -m $@ && git push; }; f"
-
 const config = require ('/boot/config.json');
 const {getDataFromSheet} = require('./src/spreadsheetChecker');
 const {readClass} = require('./src/read');
@@ -10,7 +7,7 @@ const { admin } = require('googleapis/build/src/apis/admin');
 const devName = config.device;
 
 var hw = new HardwareControl({
-  manufacturer: 'Arduino LLC (www.arduino.cc)'
+  manufacturer: 'Arduino LLC'
 });
 
 const sheet = new getDataFromSheet();
