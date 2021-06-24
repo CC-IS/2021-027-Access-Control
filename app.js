@@ -7,7 +7,7 @@ const { admin } = require('googleapis/build/src/apis/admin');
 const devName = config.device;
 
 var hw = new HardwareControl({
-  manufacturer: 'Silicon Labs'
+  manufacturer: 'Arduino LLC (www.arduino.cc)'
 });
 
 const sheet = new getDataFromSheet();
