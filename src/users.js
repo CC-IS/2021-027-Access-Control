@@ -4,9 +4,17 @@ let updater = new getDataFromSheet();
 
 class Users extends Array {
   constructor(){
+    var _this=this;
     updater.onReady(()=>{
-      await update();
+      await update().then(()=>{
+        _this.onReady();
+      });
+
     })
+
+  }
+
+  async onReady(){
 
   }
 
@@ -22,6 +30,7 @@ class Users extends Array {
         });
       });
     });
+    return;
   }
 }
 
