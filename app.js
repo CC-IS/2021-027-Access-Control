@@ -1,3 +1,6 @@
+//[alias]
+//	acp = "!f() { git add -A && git commit -m $@ && git push; }; f"
+
 const config = require ('/boot/config.json');
 const {getDataFromSheet} = require('./src/spreadsheetChecker');
 const {readClass} = require('./src/read');
