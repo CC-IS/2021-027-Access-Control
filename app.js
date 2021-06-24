@@ -49,13 +49,13 @@ sheet.onReady = ()=>{
           isAdmin = result;
         })
         //mode 2, admin needs to include and switch is on
-        if (isAdmin /*&& hw.switch == 1*/){
+        if (isAdmin && hw.switch == 1){
           hw.mode = 'program';
           progmode = true;
           console.log('Entered Programming Mode.. please input user card after 3 seconds');
           console.log ('Note: Programming mode will end in 30 seconds from now.');
           setTimeout(()=>{ progmode = false;}, 30000);
-        } else if(progmode && !isAdmin){   // case 3 adding a user
+        }else if(progmode && !isAdmin){   // case 3 adding a user
           await addUser(UID);
         } else{ // case 4 check access needs to include an if statement for admin
           let access;
@@ -67,9 +67,8 @@ sheet.onReady = ()=>{
             isAdminPresent =  result.data.values[0][0];
           })
 
-          if ((sheet.isUser(UID) && access && isAdminPresent == 1)){
+          if ((sheet.isUser(UID) && access && isAdminPresent == 1 && hw.switch == 0)|| isAdmin){
             hw.mode = 'enable';
-            //control.runMachine();
           } else if (sheet.isUser(UID) && access){
             console.log("Please ask admin to be present");
             hw.mode = 'idle';
