@@ -27,11 +27,14 @@ hw.on('switchState', state=>{
 let lastSeen = null;
 
 sheet.onReady = ()=>{
-    // loop =async  function (result){
-      hw.mode = 'enable';
+    
+    hw.mode = 'enable';
     sheet.getDevNum(devName).then ((value)=>{devNum = value});
 
     setInterval( ( async function() {
+      // if (hw.eStop ==1){
+      //   return;
+      // }
       let UID = rfid.readCards();
       //mode 1, no UID
       if (!UID){
