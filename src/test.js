@@ -10,9 +10,8 @@ const sheet = new getDataFromSheet();
 
 
 sheet.onReady = (()=>{
-    sheet.isAdmin("c66759a5").then((result)=>{
-
-        console.log(result);
+    sheet.getBatch().then((result)=>{
+        console.log(JSON.stringify( result.data,null,2));
     })
 }
 ) 
