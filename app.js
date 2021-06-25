@@ -5,6 +5,7 @@ const {readClass} = require('./src/read');
 const {HardwareControl} = require('./src/controller.js');
 const devName = config.device;
 var hw = new HardwareControl({ manufacturer: 'Arduino LLC'});
+// console.log(config.spreadSheetID + config.KeyFile);
 const sheet = new getDataFromSheet(config.spreadSheetID, config.KeyFile);
 const rfid = new readClass();
 
@@ -19,6 +20,9 @@ let lastSeen = null;
 // hw.mode =='idle'
 setInterval( async function() {
 	sheet.update().then (()=>{
+		// console.log(sheet.usrs[0].indexOf(devName));
+		// sheet.addUser('this is UID','CCIS-LAT-001');
+		sheet.addNewRow("not UID");
 		let UID = rfid.readCards();
 		hw.switch = 0;
 		if (!UID){
