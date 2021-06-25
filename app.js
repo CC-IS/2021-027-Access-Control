@@ -28,7 +28,7 @@ setInterval( async function() {
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
 				console.log("waiting for job to finish");
-				hw.on('switchState', ()=>{
+				await hw.on('switchState', ()=>{
 					hw.mode = 'idle';
 				})
 				return
@@ -61,7 +61,7 @@ setInterval( async function() {
 				addUser(UID);
 				return;
 			} else{
-				if ( (user[devName] ==1 && sheet.adminPresent == 1 && hw.switch == 0)|| user['Admin'] ==1){
+				if ( (user[devName] ==1 && sheet.adminPresent == 1 && hw.switch == 0 && hw.mode !='enable')|| user['Admin'] ==1){
 					hw.mode = 'enable';
 				} else if (sheet.adminPresent == 0){
 					console.log("Please ask admin to be present");
