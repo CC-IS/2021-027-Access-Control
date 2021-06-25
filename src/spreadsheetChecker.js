@@ -4,20 +4,21 @@
         this.authorize(keyFile);
         this.spreadsheetId = spreadsheetId;
         this.users=[];
+        this.usrs =[];
         this.usersarr =[]
+        this.keyFile = keyFile;
     }
-    onReady(){
-    }
+    
 
     async update(){
         var _this = this;
         await this.getBatch().then((result)=>{
         //   console.log(result.data.valueRanges[0].values[0]);
-          let usrs = result.data.valueRanges[0].values;
+        this.usrs = result.data.valueRanges[0].values;
     
-          var keys = usrs[0];
-          _this.adminPresent =usrs[1][1];
-          usrs.slice(2).forEach((row, i) => {
+          var keys = this.usrs[0];
+          _this.adminPresent =this.usrs[1][1];
+          this.usrs.slice(2).forEach((row, i) => {
             _this.users[i] ={}
             keys.forEach((key, j) => {
               _this.users[i][key] = row[j];
@@ -32,34 +33,15 @@
     getUser(UID){
         return this.users[this.usersarr.indexOf(UID)];
     }
-
-    async isAdminPresent(){
-        return await (this.googleSheets.spreadsheets.values.get({
-            auth: this.auth,
-            spreadsheetId: this.spreadsheetId,
-            range: 'Authorizations!B2:B2'
-        }));
-    }
     authorize (keyFile){
         const { google } = require("googleapis");
         this.googleSheets = google.sheets({ version: "v4", auth: this.client});
 
         this.auth = new google.auth.GoogleAuth({
             keyFile,
-            scopes: "https://www.googleapis.com/auth/spreadsheets",
+            scopes: "https://www.googleapis.com/auth/spreadsheets"
         });
         this.client = this.auth.getClient();
-    }
-    async test(){
-        return await this.googleSheets.spreadsheets.values.update({
-            auth: this.auth,
-            spreadsheetId: this.spreadsheetId,
-            range:['Authorizations!A9'],
-            valueInputOption: 'USER-ENTERED',
-            resource: {
-                values:[[2]],
-            }
-            }) 
     }
     async getBatch() {
         return await this.googleSheets.spreadsheets.values.batchGet({
@@ -68,20 +50,20 @@
             ranges:['Authorizations']
             })    
     }
-    async getUsers (){
-        return await this.googleSheets.spreadsheets.values.get({
-            auth: this.auth,
-            spreadsheetId: this.spreadsheetId,
-            range: 'Authorizations!A2:A'
-        })
-    } 
-    async getRow(row) {
-        return await this.googleSheets.spreadsheets.values.get({
-            auth: this.auth,
-            spreadsheetId: this.spreadsheetId,
-            range: `Authorizations!${row+2}:${row+2}`
-        });    
-    }
+    // async getUsers (){
+    //     return await this.googleSheets.spreadsheets.values.get({
+    //         auth: this.auth,
+    //         spreadsheetId: this.spreadsheetId,
+    //         range: 'Authorizations!A2:A'
+    //     })
+    // } 
+    // async getRow(row) {
+    //     return await this.googleSheets.spreadsheets.values.get({
+    //         auth: this.auth,
+    //         spreadsheetId: this.spreadsheetId,
+    //         range: `Authorizations!${row+2}:${row+2}`
+    //     });    
+    // }
     async changeCell(A1,value){
         await this.googleSheets.spreadsheets.values.update({
             auth: this.auth,
@@ -93,19 +75,20 @@
             }
             }) 
     }
-    async addUser(UID,col,devName){
-        if (this.isUser(UID)){
-            this.changeCell(`${String.fromCharCode(65 + col)}${this.getIndex(UID)+2}`,1);
+    async addUser(UID,devName){
+        if (this.usersarr.includes(UID)){
+            this.changeCell(`${String.fromCharCode(68 + this.getDevNum(UID))}${this.getIndex(UID)+3}`,1);
             console.log(`User ${UID} permitted access successfully to ${devName}`);
-           this.authorize();
+           this.authorize(this.keyFile);
         } else{
             this.addNewRow(UID).then(()=>{
             console.log(`User ${UID} was added to database. Granting access...`)
-            this.addUser(UID,col,devName);
+            this.addUser(UID,devName);
         })
     }
     }
     async addNewRow(UID){
+        if (this.usersarr.includes(UID)){return;}
         await this.googleSheets.spreadsheets.values.append({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
@@ -122,46 +105,41 @@
 
     }
     getIndex(UID){
-        // this.getUsers().then((result){
-        //     usersresult.data.values
-        // })
         let index2;
         this.users.forEach((Element,index) => {
-            if (Element[0] && Element[0] == UID){
+            // console.log (Element);
+            if (Element['userRFID'] && Element['userRFID'] == UID){
                 index2 = index;
             }
           })
           return index2;
+        }
+    getDevNum(name){
+        return this.usrs[0].indexOf(name)
     }
-    async getDevNum(name){
-        let returnedValue = 0;
-        await this.getRow(-1).then((rowData)=>{    
-            returnedValue = (rowData.data.values[0].indexOf(name)); 
-        })
-        return returnedValue;
-    }
-    async hasAccess(UID,devNum){
-        let found;
-        await this.getRow(this.getIndex(UID)).then((result)=>{
-            if ((result.data.values[0][devNum]) ==1 ){
-                found =  true;
-            } else {
-                found = false;
-            }
-    })   
-    return found;
-    }
-    async isAdmin(UID){
-        let found;
-        await this.getRow(this.getIndex(UID)).then((result)=>{
-            if ((result.data.values[0][1]) ==1 ){
-                found =  true;
-            } else {
-                found = false;
-            }
-    })   
-    return found;
-    }
+
+    // async hasAccess(UID,devNum){
+    //     let found;
+    //     await this.getRow(this.getIndex(UID)).then((result)=>{
+    //         if ((result.data.values[0][devNum]) ==1 ){
+    //             found =  true;
+    //         } else {
+    //             found = false;
+    //         }
+    // })   
+    // return found;
+    // }
+    // async isAdmin(UID){
+    //     let found;
+    //     await this.getRow(this.getIndex(UID)).then((result)=>{
+    //         if ((result.data.values[0][1]) ==1 ){
+    //             found =  true;
+    //         } else {
+    //             found = false;
+    //         }
+    // })   
+    // return found;
+    // }
         
   }
 exports.getDataFromSheet = getDataFromSheet ;
