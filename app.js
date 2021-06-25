@@ -25,7 +25,6 @@ setInterval( async function() {
 		
 		let UID = rfid.readCards();
 		
-		console.log(UID);
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
 				console.log("waiting for job to finish");
@@ -36,8 +35,9 @@ setInterval( async function() {
 			}
 			else if (hw.mode =='idle') return;
 			else if (hw.mode == 'program'){return;}
-			else {hw.mode = 'idle';}
+			else {hw.mode = 'idle'; return;}
 		}
+		console.log(UID);
 	
 		if(UID != lastSeen && hw.mode == 'program') {
 			lastSeen = UID;
