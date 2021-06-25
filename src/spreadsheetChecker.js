@@ -1,17 +1,38 @@
   class getDataFromSheet{
 
-    constructor (){
-        this.authorize();
-        // const spreadsheetId = "1XMSZRJNUllFxmb1unSxeeKXc7FFdT1XikAEPd5OSgrA";
-        this.spreadsheetId = "1k3eZkkqm1bWA3lk8gUgfoR6Xpb2vVaX4iaqnizi5iDc";
-        this.getUsers().then((result)=>{
-            this.users = result.data.values;
-            this.onReady();
-        })
-
+    constructor (spreadsheetId, keyFile){
+        this.authorize(keyFile);
+        this.spreadsheetId = spreadsheetId;
+        this.users=[];
+        this.usersarr =[]
     }
     onReady(){
     }
+
+    async update(){
+        var _this = this;
+        await this.getBatch().then((result)=>{
+        //   console.log(result.data.valueRanges[0].values[0]);
+          let usrs = result.data.valueRanges[0].values;
+    
+          var keys = usrs[0];
+          _this.adminPresent =usrs[1][1];
+          usrs.slice(2).forEach((row, i) => {
+            _this.users[i] ={}
+            keys.forEach((key, j) => {
+              _this.users[i][key] = row[j];
+            });
+          });
+        });
+        this.users.forEach((user,index)=>{
+            this.usersarr[index] = user.userRFID; 
+        })
+        return;
+      }
+    getUser(UID){
+        return this.users[this.usersarr.indexOf(UID)];
+    }
+
     async isAdminPresent(){
         return await (this.googleSheets.spreadsheets.values.get({
             auth: this.auth,
@@ -19,13 +40,12 @@
             range: 'Authorizations!B2:B2'
         }));
     }
-    authorize (){
+    authorize (keyFile){
         const { google } = require("googleapis");
         this.googleSheets = google.sheets({ version: "v4", auth: this.client});
 
         this.auth = new google.auth.GoogleAuth({
-            keyFile: "C:/Users/phyys/Desktop/Credentials.json",
-            // keyFile: "/boot/Credentials.json",
+            keyFile,
             scopes: "https://www.googleapis.com/auth/spreadsheets",
         });
         this.client = this.auth.getClient();
