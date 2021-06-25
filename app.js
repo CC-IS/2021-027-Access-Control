@@ -59,6 +59,7 @@ setInterval( async function() {
 				setTimeout(()=>{ hw.mode = 'idle';}, 30000);
 			} else if(hw.mode == 'program' && user['Admin'] !=1){   // case 3 adding a user
 				addUser(UID);
+				hw.mode = 'idle';
 				return;
 			} else{
 				if (( (user[devName] ==1 && sheet.adminPresent == 1 && hw.switch == 0 )|| user['Admin'] ==1) && hw.mode !='enable'){
