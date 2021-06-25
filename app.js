@@ -36,10 +36,11 @@ setInterval( async function() {
 		}
 		console.log(UID);
 	
-		if(/*UID != lastSeen && */hw.mode == 'program') {
-			// lastSeen = UID;
-			addUser(UID);
-			return;
+		if(hw.mode == 'program' && UID != buffer ) {
+			console.log ("buffer   " + buffer + "  UID    " + UID) ;
+				addUser(UID);
+				hw.mode = 'idle';
+				return;
 		} else /*if (UID != lastSeen)*/{
 			// lastSeen = UID;
 			if (!sheet.usersarr.includes(UID)){ console.log ("noperms no user"); hw.mode = 'noPerms'; return;}
@@ -55,12 +56,7 @@ setInterval( async function() {
 				console.log('Entered Programming Mode.. please input user card after 3 seconds');
 				console.log ('Note: Programming mode will end in 30 seconds from now.');
 				setTimeout(()=>{ hw.mode = 'idle';}, 30000);
-			} else if(hw.mode == 'program' && UID != buffer){   // case 3 adding a user
-				console.log ("buffer   " + buffer + "  UID    " + UID) ;
-				addUser(UID);
-				hw.mode = 'idle';
-				return;
-			} else{
+			}else{
 				if (( (user[devName] ==1 && sheet.adminPresent == 1 && hw.switch == 0 )|| user['Admin'] ==1) && hw.mode !='enable'){
 					hw.mode = 'enable';
 				} else if (sheet.adminPresent == 0){
