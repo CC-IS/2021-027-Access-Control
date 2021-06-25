@@ -1,12 +1,12 @@
-const config = require ('/boot/config.json');
-// const config = require ('C:/Users/phyys/Desktop/config.json')
+// const config = require ('/boot/config.json');
+const config = require ('C:/Users/phyys/Desktop/config.json')
 const {getDataFromSheet} = require('./src/spreadsheetChecker');
 const {readClass} = require('./src/read');
 const {HardwareControl} = require('./src/controller.js');
 const devName = config.device;
 var hw = new HardwareControl({ manufacturer: 'Arduino LLC'});
 // console.log(config.spreadSheetID + config.KeyFile);
-const sheet = new getDataFromSheet(config.spreadSheetID, config.keyFile);
+const sheet = new getDataFromSheet(config.spreadSheetID, config.KeyFile);
 const rfid = new readClass();
 
 hw.on('mode', (reportedMode)=>{
@@ -22,8 +22,15 @@ setInterval( async function() {
 	sheet.update().then (()=>{
 		// console.log(sheet.usrs[0].indexOf(devName));
 		// sheet.addUser('this is UID','CCIS-LAT-001');
+		
 		let UID = rfid.readCards();
-		console.log(UID);
+		// UID = "a8fff3e";
+		// hw.switch = 1;
+		// let user = sheet.getUser(UID);
+
+		// console.log(user['Admin']);
+		
+		// console.log(UID);
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
 				console.log("waiting for job to finish");
