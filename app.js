@@ -46,7 +46,7 @@ setInterval( async function() {
 			lastSeen = UID;
 			if (!sheet.usersarr.includes(UID)){hw.mode = 'noPerms'; return;}
 			let user = sheet.getUser(UID);
-			console.log(user['Admin'] + hw.switch);
+			console.log("admin: "+user['Admin'] + hw.switch);
 			if (user['Admin'] == 1 && hw.switch == 1){
 				hw.mode = 'program';
 				console.log('Entered Programming Mode.. please input user card after 3 seconds');
