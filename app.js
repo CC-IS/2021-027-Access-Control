@@ -10,13 +10,13 @@ const sheet = new getDataFromSheet(config.spreadSheetID, config.KeyFile);
 const rfid = new readClass();
 
 hw.on('mode', (reportedMode)=>{
-	console.log(reportedMode);
+	// console.log(reportedMode);
 })
 
 hw.on('switchState', state=>{
 	console.log(state + ' is the switch state');
 })
-let lastSeen = null;
+// let lastSeen = null;
 // hw.mode =='idle'
 setInterval( async function() {
 	sheet.update().then (()=>{
