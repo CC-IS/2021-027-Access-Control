@@ -40,14 +40,13 @@ setInterval( async function() {
 				return
 			}
 			else if (hw.mode =='idle') return;
-			else {hw.mode = 'idle'; return;}
+			else if (hw.mode == 'program'){return;}
+			else {hw.mode = 'idle';}
 		}
 	
 		if(UID != lastSeen && hw.mode == 'program') {
 			lastSeen = UID;
 			addUser(UID);
-			// console.log("Insert Card");
-			// hw.mode = 'idle';
 			return;
 		} else if (UID != lastSeen){
 			lastSeen = UID;
