@@ -24,13 +24,8 @@ setInterval( async function() {
 		// sheet.addUser('this is UID','CCIS-LAT-001');
 		
 		let UID = rfid.readCards();
-		// UID = "a8fff3e";
-		// hw.switch = 1;
-		// let user = sheet.getUser(UID);
-
-		// console.log(user['Admin']);
 		
-		// console.log(UID);
+		console.log(UID);
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
 				console.log("waiting for job to finish");
@@ -50,7 +45,7 @@ setInterval( async function() {
 			return;
 		} else if (UID != lastSeen){
 			lastSeen = UID;
-			if (!sheet.usersarr.includes(UID)){hw.mode = 'noPerms'; return;}
+			if (!sheet.usersarr.includes(UID)){ console.log ("noperms no user"); hw.mode = 'noPerms'; return;}
 			let user = sheet.getUser(UID);
 			console.log("admin: "+user['Admin'] + hw.switch);
 			if (user['Admin'] == 1 && hw.switch == 1){
@@ -63,7 +58,6 @@ setInterval( async function() {
 				return;
 			} else{
 				if ( (user[devName] ==1 && sheet.adminPresent == 1 && hw.switch == 0)|| user['Admin'] ==1){
-					console.log("enabled now");
 					hw.mode = 'enable';
 				} else if (sheet.adminPresent == 0){
 					console.log("Please ask admin to be present");
