@@ -35,11 +35,12 @@ setInterval( async function() {
 			else if (hw.mode =='idle') return;
 			else {hw.mode = 'idle'; return;}
 		}
-		
+	
 		if(UID != lastSeen && hw.mode == 'program') {
 			lastSeen = UID;
-			console.log("Insert Card");
-			hw.mode = 'idle';
+			addUser(UID);
+			// console.log("Insert Card");
+			// hw.mode = 'idle';
 			return;
 		} else if (UID != lastSeen){
 			lastSeen = UID;
@@ -55,6 +56,7 @@ setInterval( async function() {
 				return;
 			} else{
 				if ( (user[devName] ==1 && sheet.adminPresent == 1 && hw.switch == 0)|| user['Admin'] ==1){
+					console.log("enabled now");
 					hw.mode = 'enable';
 				} else if (sheet.adminPresent == 0){
 					console.log("Please ask admin to be present");
