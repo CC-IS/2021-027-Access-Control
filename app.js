@@ -55,7 +55,7 @@ setInterval( async function() {
 				console.log('Entered Programming Mode.. please input user card after 3 seconds');
 				console.log ('Note: Programming mode will end in 30 seconds from now.');
 				setTimeout(()=>{ hw.mode = 'idle';}, 30000);
-			} console.log ("buffer   " + buffer + "  UID    " + UID)  else if(hw.mode == 'program' && UID != buffer){   // case 3 adding a user
+			} console.log ("buffer   " + buffer + "  UID    " + UID) ; else if(hw.mode == 'program' && UID != buffer){   // case 3 adding a user
 				addUser(UID);
 				hw.mode = 'idle';
 				return;
