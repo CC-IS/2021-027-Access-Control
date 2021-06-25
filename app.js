@@ -57,6 +57,7 @@ setInterval( async function() {
 				addUser(UID);
 				return;
 			} else{
+				console.log("user[devName]" + user[devName] +"sheet.adminPresent " + sheet.adminPresent  )
 				if ( (user[devName] ==1 && sheet.adminPresent == 1 && hw.switch == 0)|| user['Admin'] ==1){
 					hw.mode = 'enable';
 				} else if (sheet.adminPresent == 0){
