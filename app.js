@@ -47,6 +47,10 @@ setInterval( async function() {
 			lastSeen = UID;
 			if (!sheet.usersarr.includes(UID)){ console.log ("noperms no user"); hw.mode = 'noPerms'; return;}
 			let user = sheet.getUser(UID);
+			console.log("user[devName]   " + user[devName]);
+			console.log("sheet.adminPresent " + sheet.adminPresent);
+			console.log("hw.swtich  " + hw.switch);
+
 			console.log("admin: "+user['Admin'] + hw.switch);
 			if (user['Admin'] == 1 && hw.switch == 1){
 				hw.mode = 'program';
@@ -57,7 +61,6 @@ setInterval( async function() {
 				addUser(UID);
 				return;
 			} else{
-				console.log("user[devName]" + user[devName] +"sheet.adminPresent " + sheet.adminPresent  )
 				if ( (user[devName] ==1 && sheet.adminPresent == 1 && hw.switch == 0)|| user['Admin'] ==1){
 					hw.mode = 'enable';
 				} else if (sheet.adminPresent == 0){
