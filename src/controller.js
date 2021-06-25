@@ -96,7 +96,7 @@ class HardwareControl extends EventEmitter{
   set mode(modeName){
     var _this = this;
     _this._mode = modeName;
-    console.log('mode is ' + modeName + ' ' + modes[modeName]);
+    // console.log('mode is ' + modeName + ' ' + modes[modeName]);
     if(_this.ready) _this.parser.sendPacket([1, MODE, modes[modeName]]);
   }
 
