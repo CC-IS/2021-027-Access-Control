@@ -28,7 +28,7 @@ setInterval( async function() {
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
 				console.log("waiting for job to finish");
-				await hw.on('switchState', ()=>{
+				hw.on('switchState', ()=>{
 					hw.mode = 'idle';
 				})
 				return
