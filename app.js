@@ -77,6 +77,5 @@ async function addUser(UID){
 	console.log("Initiating add user");
 		sheet.addUser(UID,devName).then(()=>{
 			hw.mode = 'idle';
-			clearInterval(loop);
 		});
 	}
