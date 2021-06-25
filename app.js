@@ -29,6 +29,7 @@ setInterval( async function() {
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
 				hw.on('switchState', ()=>{
+					console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
 					hw.mode = 'idle';
 				})
 				return
