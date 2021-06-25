@@ -6,7 +6,7 @@ const {HardwareControl} = require('./src/controller.js');
 const devName = config.device;
 var hw = new HardwareControl({ manufacturer: 'Arduino LLC'});
 // console.log(config.spreadSheetID + config.KeyFile);
-const sheet = new getDataFromSheet(config.spreadSheetID, config.KeyFile);
+const sheet = new getDataFromSheet(config.spreadSheetID, config.keyFile);
 const rfid = new readClass();
 
 hw.on('mode', (reportedMode)=>{
