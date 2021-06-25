@@ -23,6 +23,7 @@ setInterval( async function() {
 		// console.log(sheet.usrs[0].indexOf(devName));
 		// sheet.addUser('this is UID','CCIS-LAT-001');
 		let UID = rfid.readCards();
+		console.log(UID);
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
 				hw.on('switchState', ()=>{
