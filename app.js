@@ -52,7 +52,7 @@ setInterval( async function() {
 			console.log("hw.swtich  " + hw.switch);
 
 			console.log("admin: "+user['Admin'] + hw.switch);
-			if (user['Admin'] == 1 && hw.switch == 1){
+			if (user['Admin'] == 1 && hw.switch == 1 && hw.mode != 'enable'){
 				hw.mode = 'program';
 				console.log('Entered Programming Mode.. please input user card after 3 seconds');
 				console.log ('Note: Programming mode will end in 30 seconds from now.');
@@ -75,7 +75,7 @@ setInterval( async function() {
 },1000)
 async function addUser(UID){
 	console.log("Initiating add user");
-		sheet.addUser(UID,devNum,devName).then(()=>{
+		sheet.addUser(UID,devName).then(()=>{
 			hw.mode = 'idle';
 			clearInterval(loop);
 		});
