@@ -39,12 +39,12 @@ setInterval( async function() {
 		}
 		console.log(UID);
 	
-		if(UID != lastSeen && hw.mode == 'program') {
-			lastSeen = UID;
+		if(/*UID != lastSeen && */hw.mode == 'program') {
+			// lastSeen = UID;
 			addUser(UID);
 			return;
-		} else if (UID != lastSeen){
-			lastSeen = UID;
+		} else /*if (UID != lastSeen)*/{
+			// lastSeen = UID;
 			if (!sheet.usersarr.includes(UID)){ console.log ("noperms no user"); hw.mode = 'noPerms'; return;}
 			let user = sheet.getUser(UID);
 			console.log("user[devName]   " + user[devName]);
