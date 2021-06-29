@@ -18,11 +18,12 @@ hw.on('switchState', state=>{
 })
 setInterval( async function() {
 	sheet.update().then (()=>{
-		console.log(getIPAddress());
+		
 		// hw.sendIpAddress(getIPAddress());
 		
 		let UID = rfid.readCards();
 		
+
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
 				return
@@ -41,6 +42,7 @@ setInterval( async function() {
 		} else{
 			if (!sheet.usersarr.includes(UID)){ console.log ("noperms no user"); hw.mode = 'noPerms'; return;}
 			let user = sheet.getUser(UID);
+			if (user['Admin'] == 1 && hw.eStop ==1) {hw.sendIpAddress(getIPAddress());}
 			if (user['Admin'] == 1 && hw.switch == 1 && hw.mode != 'enable'){
 				buffer = UID;
 				hw.mode = 'program';
