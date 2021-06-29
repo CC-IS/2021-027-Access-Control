@@ -49,7 +49,7 @@ setInterval( async function() {
 			// console.log("sheet.adminPresent " + sheet.adminPresent);
 			// console.log("hw.swtich  " + hw.switch);
 
-			console.log("admin: "+user['Admin'] + hw.switch);
+			// console.log("admin: "+user['Admin'] + hw.switch);
 			if (user['Admin'] == 1 && hw.switch == 1 && hw.mode != 'enable'){
 				buffer = UID;
 				hw.mode = 'program';
