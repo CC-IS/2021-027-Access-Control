@@ -18,11 +18,11 @@ hw.on('switchState', state=>{
 })
 setInterval( async function() {
 	sheet.update().then (()=>{
-		
+
 		// hw.sendIpAddress(getIPAddress());
-		
+
 		let UID = rfid.readCards();
-		
+
 
 		if (!UID){
 			if (hw.switch == 1 && hw.mode == 'enable'){
@@ -33,7 +33,7 @@ setInterval( async function() {
 			else {hw.mode = 'idle'; return;}
 		}
 		console.log(UID);
-	
+
 		if(hw.mode == 'program' && UID != buffer ) {
 			console.log ("buffer   " + buffer + "  UID    " + UID) ;
 				addUser(UID);
@@ -42,8 +42,10 @@ setInterval( async function() {
 		} else{
 			if (!sheet.usersarr.includes(UID)){ console.log ("noperms no user"); hw.mode = 'noPerms'; return;}
 			let user = sheet.getUser(UID);
-			if (user['Admin'] == 1 && hw.eStop ==1) {hw.sendIpAddress(getIPAddress());}
-			if (user['Admin'] == 1 && hw.switch == 1 && hw.mode != 'enable'){
+			if (user['Admin'] == 1 && hw.eStop ==1) {
+				console.log('sending IP address');
+				hw.sendIpAddress(getIPAddress());
+			} else if (user['Admin'] == 1 && hw.switch == 1 && hw.mode != 'enable'){
 				buffer = UID;
 				hw.mode = 'program';
 				console.log('Entered Programming Mode.. please input user card after 3 seconds');
@@ -57,7 +59,7 @@ setInterval( async function() {
 					hw.mode = 'idle';
 				} else if (user[devName] ==0){
 					hw.mode = 'noPerms';
-				} 
+				}
 			}
 		}
 	})
