@@ -16,4 +16,4 @@ var interfaces = require('os').networkInterfaces();
                 }
             }
         }
-        console.log(addresses);
+        console.log(typeof( addresses[0]));

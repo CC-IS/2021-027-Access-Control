@@ -5,24 +5,21 @@ const {readClass} = require('./src/read');
 const {HardwareControl} = require('./src/controller.js');
 const devName = config.device;
 var hw = new HardwareControl({ manufacturer: 'Arduino LLC'});
-// console.log(config.spreadSheetID + config.KeyFile);
 const sheet = new getDataFromSheet(config.spreadSheetID, config.KeyFile);
 const rfid = new readClass();
 let buffer;
 
 hw.on('mode', (reportedMode)=>{
-	// console.log(reportedMode);
+	console.log(reportedMode);
 })
 
 hw.on('switchState', state=>{
 	console.log(state + ' is the switch state');
 })
-// let lastSeen = null;
-// hw.mode =='idle'
 setInterval( async function() {
 	sheet.update().then (()=>{
-		// console.log(sheet.usrs[0].indexOf(devName));
-		// sheet.addUser('this is UID','CCIS-LAT-001');
+		console.log(getIPAddress());
+		// hw.sendIpAddress(getIPAddress());
 		
 		let UID = rfid.readCards();
 		
@@ -41,15 +38,9 @@ setInterval( async function() {
 				addUser(UID);
 				hw.mode = 'idle';
 				return;
-		} else /*if (UID != lastSeen)*/{
-			// lastSeen = UID;
+		} else{
 			if (!sheet.usersarr.includes(UID)){ console.log ("noperms no user"); hw.mode = 'noPerms'; return;}
 			let user = sheet.getUser(UID);
-			// console.log("user[devName]   " + user[devName]);
-			// console.log("sheet.adminPresent " + sheet.adminPresent);
-			// console.log("hw.swtich  " + hw.switch);
-
-			// console.log("admin: "+user['Admin'] + hw.switch);
 			if (user['Admin'] == 1 && hw.switch == 1 && hw.mode != 'enable'){
 				buffer = UID;
 				hw.mode = 'program';
@@ -69,9 +60,25 @@ setInterval( async function() {
 		}
 	})
 },1000)
+
+
 async function addUser(UID){
 	console.log("Initiating add user");
 		sheet.addUser(UID,devName).then(()=>{
 			hw.mode = 'idle';
 		});
 	}
+
+getIPAddress(){
+	var interfaces = require('os').networkInterfaces();
+        var addresses = [];
+        for (var k in interfaces) {
+            for (var k2 in interfaces[k]) {
+                var address = interfaces[k][k2];
+                if (address.family === 'IPv4' && address.address !== '127.0.0.1' && !address.internal && address.address.contains('10.133')){
+                    addresses.push(address.address);
+                }
+            }
+        }
+        return addresses[0];
+}
