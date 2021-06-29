@@ -75,7 +75,7 @@ function getIPAddress(){
         for (var k in interfaces) {
             for (var k2 in interfaces[k]) {
                 var address = interfaces[k][k2];
-                if (address.family === 'IPv4' && address.address !== '127.0.0.1' && !address.internal && address.address.contains('10.133')){
+                if (address.family === 'IPv4' && address.address !== '127.0.0.1' && !address.internal && address.address.includes('10.133')){
                     addresses.push(address.address);
                 }
             }
