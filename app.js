@@ -69,7 +69,7 @@ async function addUser(UID){
 		});
 	}
 
-getIPAddress(){
+function getIPAddress(){
 	var interfaces = require('os').networkInterfaces();
         var addresses = [];
         for (var k in interfaces) {
