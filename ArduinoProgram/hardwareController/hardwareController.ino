@@ -38,7 +38,7 @@ enum modes{
   WAIT,
   NO_PERMS,
   E_STOPPED
-} mode = IDLE;
+} mode = IDLE, prev = mode;
 
 Button powSwitch;
 Button eStop;
@@ -117,7 +117,9 @@ void setup() {
 
   eStop.setup(5,[](int state){
     parser.sendPacket(REPORT, E_STOP, state);
-    mode = E_STOPPED;
+    if(state) mode = E_STOPPED;
+    else mode = prev;
+    writeDisplay();
   });
 
   parser.on(READY, [](unsigned char * input, int size){
@@ -133,9 +135,9 @@ void setup() {
   });
 
   parser.on(MODE, [](unsigned char * input, int size){
-    mode = input[2];
+    mode = prev = input[2];
     writeDisplay();
-    if(mode == ENABLE){
+    if(mode == ENABLE && !powSwitch.state){
       digitalWrite(notifyPin,HIGH);
       digitalWrite(relayPin,HIGH);
     } else if(mode == IDLE && !powSwitch.state){
@@ -153,12 +155,18 @@ void setup() {
     ipAddress[4] = ((input[4]&0b00011111)<<3) + ((input[5]&0b01110000)>>4);
     ipAddress[5] = '.';
     ipAddress[6] = ((input[5]&0b00001111)<<4) + ((input[6]&0b00001111));
-    parser.startMessage();
-    for(int i=0; i<7; i++){
-      if(!(i%2)) Serial.print(ipAddress[i],DEC);
-      else Serial.print(ipAddress[i]);
-    }
-    parser.endMessage();
+//    parser.startMessage();
+//    for(int i=0; i<7; i++){
+//      if(!(i%2)) Serial.print(ipAddress[i],DEC);
+//      else Serial.print(ipAddress[i]);
+//    }
+//    parser.endMessage();
+    display.clearDisplay();
+    display.setTextSize(2); // Normal 1:1 pixel scale
+    display.setTextColor(SSD1306_WHITE); // Draw white text
+    display.cp437(true); // Use full 256 char 'Code Page 437' font
+    display.setCursor(0,7); // Start at top-left corner
+    display.println(ipAddress);
   });
 
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x32
