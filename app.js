@@ -66,7 +66,7 @@ setInterval( function() {
 },1000)
 
 
-addUser(UID){
+function addUser(UID){
 	console.log("Initiating add user");
 		sheet.addUser(UID,devName).then(()=>{
 			hw.mode = 'idle';
