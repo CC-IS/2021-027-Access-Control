@@ -1,5 +1,5 @@
-const config = require ('/boot/config.json');
-// const config = require ('C:/Users/phyys/Desktop/config.json')
+// const config = require ('/boot/config.json');
+const config = require ('C:/Users/phyys/Desktop/config.json')
 const {getDataFromSheet} = require('./src/spreadsheetChecker');
 const {readClass} = require('./src/read');
 const {HardwareControl} = require('./src/controller.js');
@@ -66,7 +66,7 @@ setInterval( function() {
 },1000)
 
 
-async function addUser(UID){
+addUser(UID){
 	console.log("Initiating add user");
 		sheet.addUser(UID,devName).then(()=>{
 			hw.mode = 'idle';
