@@ -5,7 +5,7 @@ const {readClass} = require('./src/read');
 const {HardwareControl} = require('./src/controller.js');
 const devName = config.device;
 var hw = new HardwareControl({ manufacturer: 'Arduino LLC'});
-const sheet = new getDataFromSheet(config.spreadSheetID, config.KeyFile);
+const sheet = new getDataFromSheet(config.spreadSheetID, config.sheetName, config.KeyFile);
 const rfid = new readClass();
 let buffer;
 
