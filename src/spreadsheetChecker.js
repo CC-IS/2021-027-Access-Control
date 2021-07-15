@@ -1,6 +1,6 @@
   class getDataFromSheet{
 
-    constructor (spreadsheetId, keyFile){
+    constructor (spreadsheetId, sheetName, keyFile){
         this.authorize(keyFile);
         this.spreadsheetId = spreadsheetId;
         this.users=[];
@@ -47,7 +47,7 @@
         return await this.googleSheets.spreadsheets.values.batchGet({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
-            ranges:['Authorizations']
+            ranges:[sheetName]
             })    
     }
     // async getUsers (){
@@ -68,7 +68,7 @@
         await this.googleSheets.spreadsheets.values.update({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
-            range:[`Authorizations!${A1}`],
+            range:[`${sheetName}!${A1}`],
             valueInputOption: 'USER-ENTERED',
             resource: {
                 values:[[value]],
@@ -92,7 +92,7 @@
         await this.googleSheets.spreadsheets.values.append({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
-            range: "Authorizations!A:B",
+            range: `${sheetName}!A:B`,
             valueInputOption: "USER_ENTERED",
             resource: {
               values: [[UID, 0,0,0,0,0,0]],
