@@ -30,7 +30,7 @@
 sudo apt install git -y
 2- run the following command to import the project 
 git clone https://github.com/CC-IS/2021-027-Access-Control/
-3- Install NodeJs for your board, you can know your system architecture by running uname -m. For the raspberry Pi Zero, we found [this](https://gist.github.com/davps/6c6e0ba59d023a9e3963cea4ad0fb516) tutorial to be helpful.
+3- Install NodeJs for your board, you can know your system architecture by running uname -m. For the raspberry Pi Zero, we found [this](https://hassancorrigan.com/blog/install-nodejs-on-a-raspberry-pi-zero/) tutorial to be helpful.
 4- change directory into ./2021-027-Access-Control
 5- run npm i to install the dependancies.
 6- Create a [google service account] (https://support.google.com/a/answer/7378726?hl=en) and enable the google sheets API in it.
@@ -42,3 +42,11 @@ git clone https://github.com/CC-IS/2021-027-Access-Control/
 "KeyFile" : the path to the Credentials file, we suggest it to be /boot/Credentials.Json because you can easily transfer the Credentials to the boot directory from your computer.
 "sheetName" : the name of the subsheet if you are using the default sheet name should be "Sheet1"
 10- Move both the config.json file and the Credentials.Json files to your boot directory. 
+
+**Setting up the Arudino**
+1- Make sure you have the Arduino enrironment setup from [here](https://www.arduino.cc/en/software)
+2- Download the ArduinoProgram/hardwareController folder from this repo.
+3- open hardwareController.ino using the IDE, connect the arduino to your computer, select the port and board type from tools, and upload the code to the arduino.
+
+**Hardware Configuration**
+
