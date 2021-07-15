@@ -16,7 +16,7 @@ hw.on('mode', (reportedMode)=>{
 hw.on('switchState', state=>{
 	console.log(state + ' is the switch state');
 })
-setInterval( async function() {
+setInterval( function() {
 	sheet.update().then (()=>{
 		
 		// hw.sendIpAddress(getIPAddress());
