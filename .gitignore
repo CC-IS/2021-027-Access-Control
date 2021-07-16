@@ -1,4 +1,4 @@
-node_modules/*
+node_modules/
 .vscode/c_cpp_properties.json
 .vscode/arduino.json
 package-lock.json
