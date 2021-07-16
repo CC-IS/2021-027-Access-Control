@@ -18,9 +18,6 @@ hw.on('switchState', state=>{
 })
 setInterval( function() {
 	sheet.update().then (()=>{
-
-		// hw.sendIpAddress(getIPAddress());
-
 		let UID = rfid.readCards();
 
 

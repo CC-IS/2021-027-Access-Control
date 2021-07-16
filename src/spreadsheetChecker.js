@@ -13,7 +13,6 @@
     async update(){
         var _this = this;
         await this.getBatch().then((result)=>{
-        //   console.log(result.data.valueRanges[0].values[0]);
         this.usrs = result.data.valueRanges[0].values;
     
           var keys = this.usrs[0];
@@ -50,20 +49,7 @@
             ranges:[sheetName]
             })    
     }
-    // async getUsers (){
-    //     return await this.googleSheets.spreadsheets.values.get({
-    //         auth: this.auth,
-    //         spreadsheetId: this.spreadsheetId,
-    //         range: 'Authorizations!A2:A'
-    //     })
-    // } 
-    // async getRow(row) {
-    //     return await this.googleSheets.spreadsheets.values.get({
-    //         auth: this.auth,
-    //         spreadsheetId: this.spreadsheetId,
-    //         range: `Authorizations!${row+2}:${row+2}`
-    //     });    
-    // }
+    
     async changeCell(A1,value){
         await this.googleSheets.spreadsheets.values.update({
             auth: this.auth,
@@ -116,30 +102,6 @@
         }
     getDevNum(name){
         return this.usrs[0].indexOf(name)
-    }
-
-    // async hasAccess(UID,devNum){
-    //     let found;
-    //     await this.getRow(this.getIndex(UID)).then((result)=>{
-    //         if ((result.data.values[0][devNum]) ==1 ){
-    //             found =  true;
-    //         } else {
-    //             found = false;
-    //         }
-    // })   
-    // return found;
-    // }
-    // async isAdmin(UID){
-    //     let found;
-    //     await this.getRow(this.getIndex(UID)).then((result)=>{
-    //         if ((result.data.values[0][1]) ==1 ){
-    //             found =  true;
-    //         } else {
-    //             found = false;
-    //         }
-    // })   
-    // return found;
-    // }
-        
+    } 
   }
 exports.getDataFromSheet = getDataFromSheet ;
