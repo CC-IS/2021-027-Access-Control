@@ -125,3 +125,5 @@ The Arduino drives the screen, controls the relays, connects to switches and e-s
 | E-Stop| 5 (See diagram)|
 | Switch | 4 (See diagram) |
 
+# Thanks to
+We edited the RFID read code from [this](https://github.com/firsttris/mfrc522-rpi) repo, so thanks to devrim-oguz for his contribution.
