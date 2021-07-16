@@ -42,7 +42,7 @@ The Arduino drives the screen, controls the relays, connects to switches and e-s
 ## Importing the project
 1. Install git using the following command:
 
->sudo apt install git -y
+    >sudo apt install git -y
 2.  Run the following command to import the project
 
     >git clone https://github.com/CC-IS/2021-027-Access-Control/
