@@ -4,7 +4,7 @@ const { getDataFromSheet } = require('./src/spreadsheetChecker');
 const { readClass } = require('./src/read');
 const { HardwareControl } = require('./src/controller.js');
 const devName = config.device;
-var hw = new HardwareControl({ name: 'ttyAMA0' });
+var hw = new HardwareControl({ name: '/dev/ttyAMA0' });
 const sheet = new getDataFromSheet(config.spreadSheetID, config.sheetName, config.KeyFile);
 const rfid = new readClass();
 let buffer;
