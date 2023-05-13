@@ -18,9 +18,9 @@ class getDataFromSheet {
      * 
      * Gets the new values in the sheet.
      */
-    async update() {
+    update() {
         var _this = this;
-        await this.getBatch().then((result) => {
+        this.getBatch().then((result) => {
             this.usrs = result.data.valueRanges[0].values;
 
             var keys = this.usrs[0];
@@ -68,7 +68,7 @@ class getDataFromSheet {
         return this.googleSheets.spreadsheets.values.batchGet({
             auth: this.auth,
             spreadsheetId: this.spreadsheetId,
-            ranges: `${this.sheetName}!A1:H7`
+            ranges: `${this.sheetName}!A1:H99999`
         }).then((res) => {
 
             let values = res.data.valueRanges[0].values;
@@ -82,8 +82,6 @@ class getDataFromSheet {
                 });
                 objects[row[0]] = obj;
             });
-
-
             return objects
         })
 
@@ -104,32 +102,27 @@ class getDataFromSheet {
             }
         })
     }
-    async addUser(UID, devName) {
-        if (this.usersarr.includes(UID)) {
-            this.changeCell(`${String.fromCharCode(68 + this.getDevNum(UID))}${this.getIndex(UID) + 3}`, 1);
-            console.log(`User ${UID} permitted access successfully to ${devName}`);
-            this.authorize(this.keyFile);
-        } else {
-            this.addNewRow(UID).then(() => {
-                console.log(`User ${UID} was added to database. Granting access...`)
-                this.update().then(() => {
-                    this.addUser(UID, devName);
-
-                })
-            })
-        }
+    async addAccess(UID, devName) {
+        this.changeCell(`${String.fromCharCode(68 + this.getDevNum(UID))}${this.getIndex(UID) + 3}`, 1);
+        console.log(`User ${UID} permitted access successfully to ${devName}`);
+        this.authorize(this.keyFile);
     }
     async addNewRow(UID) {
         if (this.usersarr.includes(UID)) { return; }
-        await this.googleSheets.spreadsheets.values.append({
-            auth: this.auth,
-            spreadsheetId: this.spreadsheetId,
-            range: `${this.sheetName}!A:B`,
-            valueInputOption: "USER_ENTERED",
-            resource: {
-                values: [[UID, 0, 0, 0, 0, 0, 0]],
-            },
-        })
+        try {
+            await this.googleSheets.spreadsheets.values.append({
+                auth: this.auth,
+                spreadsheetId: this.spreadsheetId,
+                range: `${this.sheetName}!A:B`,
+                valueInputOption: "USER_ENTERED",
+                resource: {
+                    values: [[UID, 0, 0, 0, 0, 0, 0, 0]],
+                },
+            })
+        }
+        catch {
+            console.log("Error adding new row")
+        }
     }
     isUser(UID) {
         // var _this = this;
@@ -147,7 +140,23 @@ class getDataFromSheet {
         return index2;
     }
     getDevNum(name) {
-        return this.usrs[0].indexOf(name)
+        return this.usersarr[0].indexOf(name)
+    }
+    async setsheet(data) {
+        const rows = Object.entries(data).map(([key, values]) => [key, ...Object.values(values)]);
+        // console.log(rows)
+        try {
+            const response = await this.googleSheets.spreadsheets.values.update({
+                spreadsheetId: this.spreadsheetId,
+                auth: this.auth,
+                range: `${this.sheetName}!A2`,
+                valueInputOption: 'RAW',
+                requestBody: { values: rows },
+            });
+            console.log(`Data updated in the sheet: ${response.data.updatedRange}`);
+        } catch (error) {
+            console.error('Error updating sheet data:', error);
+        }
     }
 }
 exports.getDataFromSheet = getDataFromSheet;
